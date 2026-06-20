@@ -2,10 +2,7 @@ const COLORS = ["grey", "blue", "red", "yellow", "green", "pink", "purple", "cya
 
 function getSmartName(urlObj) {
   const host = urlObj.hostname.toLowerCase(); const path = urlObj.pathname.toLowerCase();
-  
   if (host === 'vertexaisearch.cloud.google.com' || host === 'gemini.google.com') return 'Gemini';
-  
-  // Specific Google Workspace Overrides
   if (host === 'docs.google.com') {
     if (path.startsWith('/spreadsheets')) return 'Sheets';
     if (path.startsWith('/document')) return 'Docs';
@@ -17,7 +14,6 @@ function getSmartName(urlObj) {
   if (host === 'calendar.google.com') return 'Calendar';
   if (host === 'meet.google.com') return 'Meet';
   if (host === 'mail.google.com') return 'Gmail';
-
   if (host.includes('looker')) return 'Looker';
   if (host.includes('jira') || host.includes('atlassian')) return 'Jira';
   if (host.includes('workday') || host.includes('myworkday')) return 'WD';
@@ -73,17 +69,69 @@ function autoGroupTabs() {
   });
 }
 
-// 🌟 Listen for the toggle off signal to automatically dissolve all groups
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "dissolveGroups") {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
-      const groupedTabIds = tabs
-        .filter(t => t.groupId !== chrome.tabGroups.TAB_GROUP_ID_NONE)
-        .map(t => t.id);
-      
+      const groupedTabIds = tabs.filter(t => t.groupId !== chrome.tabGroups.TAB_GROUP_ID_NONE).map(t => t.id);
       if (groupedTabIds.length > 0) {
         chrome.tabs.ungroup(groupedTabIds);
       }
     });
+  }
+});
+
+function openDashboard() {
+    const dashUrl = chrome.runtime.getURL('archive.html');
+    chrome.tabs.query({ url: dashUrl, currentWindow: true }, (tabs) => {
+        if (tabs.length > 0) {
+            chrome.tabs.update(tabs[0].id, { active: true });
+        } else {
+            chrome.tabs.create({ url: dashUrl, pinned: true, index: 0 });
+        }
+    });
+}
+
+function archiveTabs(tabsToArchive) {
+    if (!tabsToArchive || tabsToArchive.length === 0) return;
+    chrome.storage.local.get({ archives: [] }, (res) => {
+      const dateStr = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      const newItems = tabsToArchive.map(t => ({
+        id: Date.now() + Math.random(), url: t.url, title: t.title || t.url,
+        domain: getSmartName(new URL(t.url)), date: dateStr
+      }));
+      chrome.storage.local.set({ archives: [...newItems, ...res.archives] }, () => {
+        chrome.tabs.remove(tabsToArchive.map(t => t.id), () => {
+          openDashboard();
+        });
+      });
+    });
+}
+
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.create({
+    id: "stac-parent",
+    title: "Stac Tab",
+    contexts: ["page", "selection", "link", "tab"]
+  });
+  chrome.contextMenus.create({ id: "arc-current-ctx", parentId: "stac-parent", title: "Archive Current Tab" });
+  chrome.contextMenus.create({ id: "arc-all-ctx", parentId: "stac-parent", title: "Archive All Tabs" });
+  chrome.contextMenus.create({ id: "arc-left-ctx", parentId: "stac-parent", title: "Archive Tabs to Left" });
+  chrome.contextMenus.create({ id: "arc-right-ctx", parentId: "stac-parent", title: "Archive Tabs to Right" });
+});
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  switch (info.menuItemId) {
+    case "arc-current-ctx":
+      archiveTabs([tab]);
+      break;
+    case "arc-all-ctx":
+      chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => !t.url.includes('archive.html'))));
+      break;
+    case "arc-left-ctx":
+      chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => t.index < tab.index && !t.pinned)));
+      break;
+    case "arc-right-ctx":
+      chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => t.index > tab.index)));
+      break;
   }
 });

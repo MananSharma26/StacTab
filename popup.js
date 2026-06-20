@@ -19,6 +19,12 @@ function getSmartName(urlObj) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  
+  const logo = document.getElementById('brand-logo');
+  if(logo) {
+    logo.addEventListener('error', function() { this.style.display = 'none'; });
+  }
+
   const toggleAuto = document.getElementById('toggle-auto');
   chrome.storage.local.get({ autoGroupEnabled: true }, (res) => { toggleAuto.checked = res.autoGroupEnabled; });
   toggleAuto.addEventListener('change', () => {
@@ -33,68 +39,70 @@ document.addEventListener('DOMContentLoaded', function() {
   let openTabs = [];
   let selectedIndex = -1;
 
-  searchInput.focus();
-  chrome.tabs.query({ currentWindow: true }, (tabs) => { openTabs = tabs; });
+  if(searchInput) {
+      searchInput.focus();
+      chrome.tabs.query({ currentWindow: true }, (tabs) => { openTabs = tabs; });
 
-  searchInput.addEventListener('input', (e) => {
-    const term = e.target.value.toLowerCase();
-    selectedIndex = -1;
-    if (!term) { searchResults.style.display = 'none'; return; }
-    
-    const matches = openTabs.filter(t => (t.title && t.title.toLowerCase().includes(term)) || (t.url && t.url.toLowerCase().includes(term)));
-    
-    if (matches.length > 0) {
-      searchResults.style.display = 'block';
-      searchResults.innerHTML = matches.map((t) => `
-        <div class="search-item" data-id="${t.id}" data-window="${t.windowId}">
-          <div class="search-item-title">${t.title || t.url}</div>
-          <div class="search-item-url">${t.url}</div>
-        </div>
-      `).join('');
-      
-      document.querySelectorAll('.search-item').forEach(item => {
-        item.addEventListener('click', function() {
-          chrome.windows.update(parseInt(this.getAttribute('data-window')), { focused: true });
-          chrome.tabs.update(parseInt(this.getAttribute('data-id')), { active: true });
-        });
+      searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        selectedIndex = -1;
+        if (!term) { searchResults.style.display = 'none'; return; }
+        
+        const matches = openTabs.filter(t => (t.title && t.title.toLowerCase().includes(term)) || (t.url && t.url.toLowerCase().includes(term)));
+        
+        if (matches.length > 0) {
+          searchResults.style.display = 'block';
+          searchResults.innerHTML = matches.map((t) => `
+            <div class="search-item" data-id="${t.id}" data-window="${t.windowId}">
+              <div class="search-item-title">${t.title || t.url}</div>
+              <div class="search-item-url">${t.url}</div>
+            </div>
+          `).join('');
+          
+          document.querySelectorAll('.search-item').forEach(item => {
+            item.addEventListener('click', function() {
+              chrome.windows.update(parseInt(this.getAttribute('data-window')), { focused: true });
+              chrome.tabs.update(parseInt(this.getAttribute('data-id')), { active: true });
+            });
+          });
+        } else {
+          searchResults.style.display = 'none';
+        }
       });
-    } else {
-      searchResults.style.display = 'none';
-    }
-  });
-  
-  function updateSelection(items) {
-    items.forEach((item, index) => {
-      if (index === selectedIndex) {
-        item.classList.add('active');
-        item.scrollIntoView({ block: 'nearest' });
-      } else {
-        item.classList.remove('active');
+      
+      function updateSelection(items) {
+        items.forEach((item, index) => {
+          if (index === selectedIndex) {
+            item.classList.add('active');
+            item.scrollIntoView({ block: 'nearest' });
+          } else {
+            item.classList.remove('active');
+          }
+        });
       }
-    });
+
+      searchInput.addEventListener('keydown', (e) => {
+        const items = searchResults.querySelectorAll('.search-item');
+        if (searchResults.style.display === 'none' || items.length === 0) return;
+
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          selectedIndex = (selectedIndex + 1) % items.length;
+          updateSelection(items);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+          updateSelection(items);
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (selectedIndex > -1) {
+            items[selectedIndex].click();
+          } else {
+            items[0].click();
+          }
+        }
+      });
   }
-
-  searchInput.addEventListener('keydown', (e) => {
-    const items = searchResults.querySelectorAll('.search-item');
-    if (searchResults.style.display === 'none' || items.length === 0) return;
-
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      selectedIndex = (selectedIndex + 1) % items.length;
-      updateSelection(items);
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      selectedIndex = (selectedIndex - 1 + items.length) % items.length;
-      updateSelection(items);
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      if (selectedIndex > -1) {
-        items[selectedIndex].click();
-      } else {
-        items[0].click();
-      }
-    }
-  });
 
   document.getElementById('btn-sort').addEventListener('click', function() {
     chrome.tabs.query({ currentWindow: true }, function(tabs) {
@@ -144,11 +152,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   chrome.tabs.query({ currentWindow: true, active: true }, (activeTabs) => {
     const activeTab = activeTabs[0];
-    document.getElementById('arc-current').addEventListener('click', () => archiveTabs([activeTab]));
-    document.getElementById('arc-all').addEventListener('click', () => { chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => !t.url.includes('archive.html')))); });
-    document.getElementById('arc-left').addEventListener('click', () => { chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => t.index < activeTab.index && !t.pinned))); });
-    document.getElementById('arc-right').addEventListener('click', () => { chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => t.index > activeTab.index))); });
+    if (activeTab) {
+      document.getElementById('arc-current').addEventListener('click', () => archiveTabs([activeTab]));
+      document.getElementById('arc-all').addEventListener('click', () => { chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => !t.url.includes('archive.html')))); });
+      document.getElementById('arc-left').addEventListener('click', () => { chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => t.index < activeTab.index && !t.pinned))); });
+      document.getElementById('arc-right').addEventListener('click', () => { chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => t.index > activeTab.index))); });
+    }
   });
 
-  document.getElementById('btn-dashboard').addEventListener('click', openDashboard);
+  const btnDashboard = document.getElementById('btn-dashboard');
+  if(btnDashboard) {
+      btnDashboard.addEventListener('click', openDashboard);
+  }
 });

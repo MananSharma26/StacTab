@@ -2,16 +2,16 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Stac Tab - Vault</title>
+  <title>StacTab Vault</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
     :root {
       --bg: #09090b; --surface: #18181b; --border: #27272a;
       --text-main: #f4f4f5; --text-sub: #a1a1aa; 
-      --accent: #3b82f6; --radius: 12px;
+      --accent-green: #22c55e; --accent-red: #ef4444; --radius: 12px;
     }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 60px 20px; -webkit-font-smoothing: antialiased; }
-    .container { max-width: 800px; margin: 0 auto; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 60px 40px; -webkit-font-smoothing: antialiased; }
+    .container { max-width: 1280px; margin: 0 auto; }
     
     .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 50px; }
     .header-left { display: flex; align-items: center; gap: 16px; }
@@ -19,8 +19,8 @@
     .search-box { background: var(--surface); border: 1px solid var(--border); padding: 10px 16px; border-radius: 8px; color: var(--text-main); font-family: 'Inter'; font-size: 14px; width: 250px; outline: none; transition: 0.2s; }
     .search-box:focus { border-color: var(--text-sub); }
     
-    .date-group { margin-bottom: 40px; }
-    .date-header-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 20px; }
+    .date-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 40px; }
+    .date-header-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
     .date-title { font-size: 18px; font-weight: 600; color: var(--text-main); }
     
     .domain-group { margin-bottom: 24px; }
@@ -29,39 +29,18 @@
     
     .actions-right { display: flex; gap: 8px; align-items: center; }
     .btn { background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
-    .btn:hover { background: rgba(255,255,255,0.1); }
+    .btn.btn-restore:hover { color: var(--accent-green); background-color: rgba(34, 197, 94, 0.1); }
+    .btn.btn-delete:hover { color: var(--accent-red); background-color: rgba(239, 68, 68, 0.1); }
     .btn-export { color: #a1a1aa; border-color: transparent; background: transparent; }
     .btn-export:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
 
-    .tab-grid { 
-      display: grid; 
-      grid-template-columns: repeat(2, 1fr); 
-      gap: 12px; 
-    }
-    
-    .tab-item { 
-      display: flex; align-items: center; justify-content: space-between; 
-      padding: 14px 16px; background: var(--surface); border: 1px solid var(--border); 
-      border-radius: 8px; transition: all 0.2s ease;
-      min-width: 0; 
-    }
-    .tab-item:hover { border-color: #3f3f46; background: #27272a; }
-    
-    .tab-info { 
-      display: flex; flex-direction: column; overflow: hidden; 
-      padding-right: 16px; flex: 1; 
-      min-width: 0; 
-    }
-    
-    .tab-title { 
-      font-size: 14px; font-weight: 500; color: var(--text-main); 
-      margin-bottom: 4px; text-decoration: none;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
-    }
-    .tab-url { 
-      font-size: 12px; color: var(--text-sub); 
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
-    }
+    .tab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 12px; }
+    .tab-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s ease; min-width: 0; }
+    .tab-item:hover { border-color: #3f3f46; background: #1f1f22; }
+    .tab-info { display: flex; flex-direction: column; overflow: hidden; padding-right: 16px; flex: 1; min-width: 0; }
+    .tab-title { font-size: 14px; font-weight: 500; color: var(--text-main); margin-bottom: 4px; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tab-url { font-size: 12px; color: var(--text-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tab-actions { display: flex; gap: 6px; align-items: center; }
     
     .empty-state { text-align: center; padding: 80px 20px; color: var(--text-sub); }
   </style>
@@ -71,7 +50,7 @@
     <div class="page-header">
       <div class="header-left">
         <span style="font-size: 24px;">✦</span>
-        <h1>Vault</h1>
+        <h1>StacTab Vault</h1>
       </div>
       <input type="text" id="search-box" class="search-box" placeholder="Search tabs...">
     </div>

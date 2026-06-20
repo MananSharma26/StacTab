@@ -5,107 +5,95 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
     :root { 
-      --bg: #f8fafc; --surface: #ffffff;
-      --text-main: #0f172a; --text-sub: #64748b;
-      --accent: #3b82f6; --shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-      --shadow-hover: 0 6px 14px rgba(0, 0, 0, 0.06); --radius-large: 12px; 
+      --bg: #F5F3FF; 
+      --surface: #FFFFFF; 
+      --surface-hover: #FBFBFF;
+      --border: #E5E0FF; 
+      --text-main: #1F1A33; 
+      --text-sub: #6B628D;
+      --accent: #8B5CF6; 
+      --danger: #EF4444; 
+      --radius-large: 12px; 
     }
     body { 
       width: 260px; margin: 0; padding: 16px; 
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
       background: var(--bg); color: var(--text-main); user-select: none; -webkit-font-smoothing: antialiased;
     }
-    
-    .profile-card { background: var(--surface); border-radius: var(--radius-large); padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow); margin-bottom: 12px; }
+    .profile-card { background: var(--surface); border-radius: var(--radius-large); padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border); margin-bottom: 12px; }
     .brand { display: flex; align-items: center; gap: 10px; }
     .brand img { width: 24px; height: 24px; object-fit: contain; } 
     .brand-text { display: flex; flex-direction: column; }
     .brand-name { font-size: 14px; font-weight: 600; color: var(--text-main); letter-spacing: -0.2px; }
     .brand-status { font-size: 11px; color: var(--text-sub); font-weight: 500; }
-    
     .switch { position: relative; display: inline-block; width: 32px; height: 18px; }
     .switch input { opacity: 0; width: 0; height: 0; }
-    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e2e8f0; transition: .3s; border-radius: 20px; }
-    .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #E5E0FF; transition: .3s; border-radius: 20px; }
+    .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
     input:checked + .slider { background-color: var(--accent); }
     input:checked + .slider:before { transform: translateX(14px); }
-
     .search-container { position: relative; margin-bottom: 16px; }
-    .search-input { 
-      width: 100%; box-sizing: border-box; padding: 10px 12px 10px 32px; 
-      background: var(--surface); border: 1px solid #e2e8f0; border-radius: 8px; 
-      font-family: 'Inter'; font-size: 13px; color: var(--text-main); outline: none; transition: 0.2s;
-    }
-    .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1); }
-    .search-icon { position: absolute; left: 10px; top: 10px; font-size: 14px; color: var(--text-sub); }
-    
-    #search-results { 
-      display: none; position: absolute; top: 100%; left: 0; right: 0; 
-      background: var(--surface); border: 1px solid #e2e8f0; border-radius: 8px; 
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-top: 4px; z-index: 100; 
-      max-height: 200px; overflow-y: auto; 
-    }
-    .search-item { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; cursor: pointer; display: flex; flex-direction: column; }
+    .search-input { width: 100%; box-sizing: border-box; padding: 10px 12px 10px 32px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; font-family: 'Inter'; font-size: 13px; color: var(--text-main); outline: none; transition: 0.2s; }
+    .search-input:focus { border-color: var(--accent); }
+    .search-icon { position: absolute; left: 12px; top: 10px; font-size: 14px; color: var(--text-sub); }
+    #search-results { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin-top: 4px; z-index: 100; max-height: 200px; overflow-y: auto; }
+    .search-item { padding: 10px 12px; border-bottom: 1px solid #F5F3FF; cursor: pointer; display: flex; flex-direction: column; }
     .search-item:last-child { border-bottom: none; }
-    .search-item.active, .search-item:hover { background: #f8fafc; }
-    .search-item-title { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-main); }
-    .search-item-url { font-size: 10px; color: var(--text-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-    .hero-btn { width: 100%; padding: 11px; background: var(--text-main); color: white; border: none; border-radius: var(--radius-large); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 3px 10px rgba(15, 23, 42, 0.15); margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .hero-btn:hover { transform: translateY(-1.5px); box-shadow: 0 5px 15px rgba(15, 23, 42, 0.2); }
-    .hero-btn:active { transform: translateY(0); }
-
-    .tool-bar { display: flex; background: var(--surface); border-radius: var(--radius-large); padding: 4px; box-shadow: var(--shadow); margin-bottom: 16px; gap: 2px; }
+    .search-item.active, .search-item:hover { background: #F5F3FF; }
+    .search-item-title { font-size: 12px; font-weight: 500; color: var(--text-main); }
+    .search-item-url { font-size: 10px; color: var(--text-sub); }
+    .hero-btn { 
+      width: 100%; padding: 11px; 
+      background: var(--accent); /* Changed to accent color */
+      color: #FFFFFF; /* Changed to white */
+      border: none; border-radius: var(--radius-large); 
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; 
+      cursor: pointer; transition: all 0.2s ease; margin-bottom: 12px; 
+      display: flex; align-items: center; justify-content: center; gap: 8px; 
+    }
+    .hero-btn:hover { opacity: 0.9; }
+    .tool-bar { display: flex; background: var(--surface); border-radius: var(--radius-large); padding: 4px; border: 1px solid var(--border); margin-bottom: 16px; gap: 2px; }
     .tool-btn { flex: 1; padding: 8px 0; background: transparent; border: none; border-radius: 8px; font-size: 12px; font-weight: 500; color: var(--text-sub); cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-    .tool-btn:hover { background: var(--bg); color: var(--text-main); }
+    .tool-btn:hover { background: var(--bg); }
     .tool-icon { font-size: 15px; }
-
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; padding: 0 4px; }
     .section-title { font-size: 12px; font-weight: 600; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.5px; }
-    .dash-link { font-size: 12px; font-weight: 500; color: var(--accent); text-decoration: none; cursor: pointer; transition: 0.2s;}
-    .dash-link:hover { opacity: 0.7; }
-
+    .dash-link { font-size: 12px; font-weight: 500; color: var(--accent); text-decoration: none; cursor: pointer; transition: 0.2s; background: rgba(139, 92, 246, 0.05); padding: 4px 8px; border-radius: 6px;}
+    .dash-link:hover { background: rgba(139, 92, 246, 0.1); }
     .archive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-    .arc-btn { background: var(--surface); border: none; padding: 10px 8px; border-radius: var(--radius-large); font-size: 12px; font-weight: 500; color: var(--text-main); cursor: pointer; box-shadow: var(--shadow); transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 6px; }
-    .arc-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-hover); color: var(--accent);}
-    .arc-icon { color: var(--text-sub); font-size: 13px; }
+    .arc-btn { background: var(--surface); border: 1px solid var(--border); padding: 12px 8px; border-radius: var(--radius-large); font-size: 12px; font-weight: 500; color: var(--text-main); cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+    .arc-btn:hover { border-color: var(--accent); background: var(--surface-hover); }
+    .arc-icon { color: var(--text-sub); font-size: 18px; }
   </style>
 </head>
 <body>
-  
   <div class="profile-card">
     <div class="brand">
-      <img src="icon_v2.png" alt="Logo" onerror="this.style.display='none'">
+      <img src="icon_v2.png" alt="Logo" id="brand-logo">
       <div class="brand-text"><span class="brand-name">Stac Tab</span><span class="brand-status">Auto-Pilot</span></div>
     </div>
     <label class="switch" title="Toggle Auto-Grouping"><input type="checkbox" id="toggle-auto" checked><span class="slider"></span></label>
   </div>
-
   <div class="search-container">
     <span class="search-icon">🔍</span>
-    <input type="text" id="live-search" class="search-input" placeholder="Search tabs... (Option+S)">
+    <input type="text" id="live-search" class="search-input" placeholder="Search tabs... (Alt+S)">
     <div id="search-results"></div>
   </div>
-
   <button id="btn-sort" class="hero-btn"><span style="font-size: 16px;">✦</span> Smart organize tabs</button>
-
   <div class="tool-bar">
     <button id="btn-sleep" class="tool-btn"><span class="tool-icon">☾</span><span>Sleep tabs</span></button>
-    <button id="btn-dupes" class="tool-btn" style="color: #ef4444;"><span class="tool-icon">⦻</span><span>Dedupe tabs</span></button>
+    <button id="btn-dupes" class="tool-btn" style="color: var(--danger);"><span class="tool-icon">⦻</span><span>Dedupe tabs</span></button>
   </div>
-  
   <div class="section-header">
     <span class="section-title">Archive tabs</span>
     <span id="btn-dashboard" class="dash-link">View Vault ↗</span>
   </div>
-  
   <div class="archive-grid">
-    <button id="arc-current" class="arc-btn"><span class="arc-icon">⊙</span> Current</button>
-    <button id="arc-all" class="arc-btn"><span class="arc-icon">⊚</span> All Tabs</button>
-    <button id="arc-left" class="arc-btn"><span class="arc-icon">⟵</span> Left</button>
-    <button id="arc-right" class="arc-btn"><span class="arc-icon">⟶</span> Right</button>
+    <button id="arc-current" class="arc-btn"><span class="arc-icon">⊙</span> Current tab</button>
+    <button id="arc-all" class="arc-btn"><span class="arc-icon">⊚</span> All tabs</button>
+    <button id="arc-left" class="arc-btn"><span class="arc-icon">⟵</span> Left tabs</button>
+    <button id="arc-right" class="arc-btn"><span class="arc-icon">⟶</span> Right tabs</button>
   </div>
-
   <script src="popup.js"></script>
 </body>
 </html>
