@@ -33,6 +33,15 @@
     .btn.btn-delete:hover { color: var(--accent-red); background-color: rgba(239, 68, 68, 0.1); }
     .btn-export { color: #a1a1aa; border-color: transparent; background: transparent; }
     .btn-export:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+    .header-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .vault-btn { background: rgba(255,255,255,0.05); color: var(--text-sub); border: 1px solid rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; white-space: nowrap; }
+    .vault-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.08); }
+    .btn-new-window { background: rgba(255,255,255,0.05); color: var(--text-sub); border: 1px solid rgba(255,255,255,0.1); }
+    .btn-new-window:hover { color: var(--text-main); background: rgba(255,255,255,0.08); }
+    #undo-banner { display: none; background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.25); border-radius: 12px; padding: 12px 20px; margin-bottom: 24px; align-items: center; justify-content: space-between; gap: 12px; }
+    .undo-text { font-size: 13px; color: var(--text-main); }
+    .undo-btn { background: rgba(139,92,246,0.15); color: #a78bfa; border: 1px solid rgba(139,92,246,0.35); padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: 'Inter'; }
+    .undo-btn:hover { background: rgba(139,92,246,0.25); }
 
     .tab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 12px; }
     .tab-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s ease; min-width: 0; }
@@ -52,7 +61,16 @@
         <span style="font-size: 24px;">✦</span>
         <h1>StacTab Vault</h1>
       </div>
-      <input type="text" id="search-box" class="search-box" placeholder="Search tabs...">
+      <div class="header-right">
+        <input type="text" id="search-box" class="search-box" placeholder="Search tabs...">
+        <button id="btn-sort-order" class="vault-btn">↓ Newest</button>
+        <button id="btn-export-json" class="vault-btn">↓ JSON</button>
+        <label class="vault-btn" style="cursor:pointer;" title="Import JSON archive">↑ Import<input type="file" id="json-import" accept=".json" style="display:none;"></label>
+      </div>
+    </div>
+    <div id="undo-banner">
+      <span class="undo-text" id="undo-text"></span>
+      <button class="undo-btn" id="btn-undo">↩ Undo</button>
     </div>
     <div id="archive-list"></div>
   </div>

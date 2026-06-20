@@ -31,23 +31,34 @@ function getColorForName(name) {
   return COLORS[Math.abs(hash) % COLORS.length];
 }
 
+function updateBadge() {
+  chrome.tabs.query({ currentWindow: true }, (tabs) => {
+    chrome.action.setBadgeText({ text: String(tabs.length) });
+    chrome.action.setBadgeBackgroundColor({ color: '#8B5CF6' });
+  });
+}
+
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.url) {
-    chrome.storage.local.get({ autoGroupEnabled: true }, (res) => {
+    chrome.storage.local.get({ autoGroupEnabled: true, groupThreshold: 2 }, (res) => {
       if (res.autoGroupEnabled) {
-        autoGroupTabs();
+        autoGroupTabs(res.groupThreshold);
       }
     });
+    updateBadge();
   }
 });
 
-function autoGroupTabs() {
+chrome.tabs.onCreated.addListener(updateBadge);
+chrome.tabs.onRemoved.addListener(updateBadge);
+
+function autoGroupTabs(threshold = 2) {
   chrome.tabs.query({ currentWindow: true }, (tabs) => {
     const groups = {};
     tabs.forEach(tab => {
       try {
         const url = new URL(tab.url);
-        if (!url.protocol.startsWith('http')) return; 
+        if (!url.protocol.startsWith('http')) return;
         const smartName = getSmartName(url);
         if (!groups[smartName]) groups[smartName] = [];
         groups[smartName].push(tab);
@@ -55,7 +66,7 @@ function autoGroupTabs() {
     });
 
     for (const [name, domainTabs] of Object.entries(groups)) {
-      if (domainTabs.length >= 3) {
+      if (domainTabs.length >= threshold) {
         const firstGroupId = domainTabs[0].groupId;
         const alreadyGrouped = domainTabs.every(t => t.groupId !== chrome.tabGroups.TAB_GROUP_ID_NONE && t.groupId === firstGroupId);
         if (!alreadyGrouped) {
@@ -93,13 +104,15 @@ function openDashboard() {
 
 function archiveTabs(tabsToArchive) {
     if (!tabsToArchive || tabsToArchive.length === 0) return;
+    tabsToArchive = tabsToArchive.filter(t => { try { return new URL(t.url).protocol.startsWith('http'); } catch(e) { return false; } });
+    if (tabsToArchive.length === 0) return;
     chrome.storage.local.get({ archives: [] }, (res) => {
       const dateStr = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
       const newItems = tabsToArchive.map(t => ({
         id: Date.now() + Math.random(), url: t.url, title: t.title || t.url,
         domain: getSmartName(new URL(t.url)), date: dateStr
       }));
-      chrome.storage.local.set({ archives: [...newItems, ...res.archives] }, () => {
+      chrome.storage.local.set({ archives: [...newItems, ...res.archives], lastArchive: { items: newItems, timestamp: Date.now() } }, () => {
         chrome.tabs.remove(tabsToArchive.map(t => t.id), () => {
           openDashboard();
         });
@@ -128,10 +141,10 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
       chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => !t.url.includes('archive.html'))));
       break;
     case "arc-left-ctx":
-      chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => t.index < tab.index && !t.pinned)));
+      chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => t.index < tab.index && !t.pinned && !t.url.includes('archive.html'))));
       break;
     case "arc-right-ctx":
-      chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => t.index > tab.index)));
+      chrome.tabs.query({ currentWindow: true }, tabs => archiveTabs(tabs.filter(t => t.index > tab.index && !t.url.includes('archive.html'))));
       break;
   }
 });

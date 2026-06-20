@@ -15,12 +15,20 @@
       --danger: #EF4444; 
       --radius-large: 12px; 
     }
-    body { 
-      width: 260px; margin: 0; padding: 16px; 
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
+    body {
+      width: 260px; margin: 0; padding: 16px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg); color: var(--text-main); user-select: none; -webkit-font-smoothing: antialiased;
+      position: relative; overflow: hidden;
     }
-    .profile-card { background: var(--surface); border-radius: var(--radius-large); padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border); margin-bottom: 12px; }
+    .profile-card { background: var(--surface); border-radius: var(--radius-large); padding: 10px 14px; display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--border); margin-bottom: 12px; }
+    .profile-card-row { display: flex; align-items: center; justify-content: space-between; }
+    .threshold-row { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 8px; }
+    .threshold-label { font-size: 11px; font-weight: 500; color: var(--text-sub); }
+    .thresh-picker { display: flex; gap: 3px; background: var(--bg); border-radius: 8px; padding: 2px; }
+    .thresh-btn { width: 30px; height: 22px; background: transparent; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; color: var(--text-sub); cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; }
+    .thresh-btn:hover { background: var(--surface); color: var(--text-main); }
+    .thresh-btn.active { background: var(--accent); color: #fff; }
     .brand { display: flex; align-items: center; gap: 10px; }
     .brand img { width: 24px; height: 24px; object-fit: contain; } 
     .brand-text { display: flex; flex-direction: column; }
@@ -64,15 +72,38 @@
     .arc-btn { background: var(--surface); border: 1px solid var(--border); padding: 12px 8px; border-radius: var(--radius-large); font-size: 12px; font-weight: 500; color: var(--text-main); cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
     .arc-btn:hover { border-color: var(--accent); background: var(--surface-hover); }
     .arc-icon { color: var(--text-sub); font-size: 18px; }
+    #session-modal { display: none; position: absolute; inset: 0; background: var(--surface); border-radius: var(--radius-large); padding: 20px; z-index: 200; flex-direction: column; gap: 12px; border: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .session-modal-title { font-size: 13px; font-weight: 600; color: var(--text-main); }
+    .session-modal-hint { font-size: 11px; color: var(--text-sub); margin-top: -6px; }
+    .session-modal-actions { display: flex; gap: 8px; margin-top: 4px; }
+    .btn-cancel { flex: 1; padding: 9px; background: transparent; border: 1px solid var(--border); border-radius: var(--radius-large); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-sub); cursor: pointer; transition: 0.2s; }
+    .btn-cancel:hover { background: var(--bg); }
+    #groups-section { display: none; margin-top: 12px; }
+    .groups-list { display: flex; flex-direction: column; gap: 6px; }
+    .arc-group-btn { background: var(--surface); border: 1px solid var(--border); padding: 8px 12px; border-radius: var(--radius-large); font-size: 12px; font-weight: 500; color: var(--text-main); cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; font-family: 'Inter', sans-serif; }
+    .arc-group-btn:hover { border-color: var(--accent); background: var(--surface-hover); }
+    .group-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   </style>
 </head>
 <body>
   <div class="profile-card">
-    <div class="brand">
-      <img src="icon_v2.png" alt="Logo" id="brand-logo">
-      <div class="brand-text"><span class="brand-name">Stac Tab</span><span class="brand-status">Auto-Pilot</span></div>
+    <div class="profile-card-row">
+      <div class="brand">
+        <img src="icon_v2.png" alt="Logo" id="brand-logo">
+        <div class="brand-text"><span class="brand-name">Stac Tab</span><span class="brand-status">Auto-Pilot</span></div>
+      </div>
+      <label class="switch" title="Toggle Auto-Grouping"><input type="checkbox" id="toggle-auto" checked><span class="slider"></span></label>
     </div>
-    <label class="switch" title="Toggle Auto-Grouping"><input type="checkbox" id="toggle-auto" checked><span class="slider"></span></label>
+    <div class="threshold-row">
+      <span class="threshold-label">Group at</span>
+      <div class="thresh-picker">
+        <button class="thresh-btn" data-val="2">2</button>
+        <button class="thresh-btn" data-val="3">3</button>
+        <button class="thresh-btn" data-val="4">4</button>
+        <button class="thresh-btn" data-val="5">5</button>
+      </div>
+      <span class="threshold-label">+ tabs</span>
+    </div>
   </div>
   <div class="search-container">
     <span class="search-icon">🔍</span>
@@ -93,6 +124,21 @@
     <button id="arc-all" class="arc-btn"><span class="arc-icon">⊚</span> All tabs</button>
     <button id="arc-left" class="arc-btn"><span class="arc-icon">⟵</span> Left tabs</button>
     <button id="arc-right" class="arc-btn"><span class="arc-icon">⟶</span> Right tabs</button>
+  </div>
+  <div id="groups-section">
+    <div class="section-header" style="margin-top:12px;margin-bottom:8px;">
+      <span class="section-title">Archive a group</span>
+    </div>
+    <div id="groups-list" class="groups-list"></div>
+  </div>
+  <div id="session-modal">
+    <div class="session-modal-title">Name this session</div>
+    <div class="session-modal-hint">Optional — leave blank to use today's date</div>
+    <input type="text" id="session-name-input" class="search-input" placeholder="e.g. Work, Research...">
+    <div class="session-modal-actions">
+      <button id="session-confirm" class="hero-btn" style="flex:1;margin:0;padding:9px;font-size:13px;">Archive</button>
+      <button id="session-cancel" class="btn-cancel">Cancel</button>
+    </div>
   </div>
   <script src="popup.js"></script>
 </body>
