@@ -1,6 +1,6 @@
 # StacTab 📂
 
-A premium Chrome Extension that auto-groups your tabs dynamically, sleeps inactive tabs to save RAM, dedupes duplicates, and lets you archive your tabs into a fully exportable workspace dashboard. So you don't have to keep those 100 tabs open all the time, and be assured that all your saved tabs are safe! 
+Stop hoarding 100 tabs. StacTab auto-groups, sleeps, dedupes, and archives them into a vault you can search, export, and restore anytime.
 
 ## 🚀 Installation
 
