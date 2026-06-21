@@ -1423,7 +1423,7 @@
         <div class="fade-in fade-in-delay-2">
 
           <!-- BEFORE: chaotic unlabeled tabs -->
-          <div style="background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);">
+          <div style="background:#FFF7F7;border:1px solid #FECACA;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);">
             <div style="background:#E8EAED;padding:8px 10px 0;display:flex;gap:2px;align-items:flex-end;flex-wrap:nowrap;overflow:hidden;">
               <div class="fv-tab fv-tab-grey">github</div>
               <div class="fv-tab fv-tab-grey" style="opacity:.85;">gmail</div>
@@ -1441,16 +1441,22 @@
           </div>
 
           <!-- Swoosh arrow -->
-          <div style="display:flex;align-items:center;justify-content:center;padding:10px 0;gap:10px;">
-            <svg width="230" height="52" viewBox="0 0 230 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M14 14 C14 14, 110 4, 190 36" stroke="#8B5CF6" stroke-width="4.5" stroke-linecap="round" fill="none"/>
-              <polygon points="190,36 172,37 179,22" fill="#8B5CF6"/>
+          <div style="display:flex;align-items:center;justify-content:center;padding:20px 0;">
+            <svg width="260" height="62" viewBox="0 0 260 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="swoosh-grad" x1="0%" y1="50%" x2="100%" y2="50%">
+                  <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.15"/>
+                  <stop offset="60%" stop-color="#8B5CF6" stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color="#7C3AED" stop-opacity="1"/>
+                </linearGradient>
+              </defs>
+              <!-- Tapered calligraphic swoosh: thin ghost on the left, bold solid arrowhead on the right -->
+              <path d="M 16 13 C 38 3, 105 1, 183 33 L 210 50 L 180 41 C 106 20, 42 18, 20 19 Z" fill="url(#swoosh-grad)"/>
             </svg>
-            <span style="font-size:.72rem;font-weight:700;color:#8B5CF6;letter-spacing:.06em;text-transform:uppercase;background:rgba(139,92,246,.08);padding:3px 10px;border-radius:99px;">StacTab organises</span>
           </div>
 
           <!-- AFTER: color-coded grouped tabs -->
-          <div style="background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);">
+          <div style="background:#F0FFF5;border:1px solid #BBF7D0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);">
             <div style="background:#E8EAED;padding:8px 10px 0;display:flex;gap:3px;align-items:flex-end;flex-wrap:nowrap;overflow:hidden;">
               <div class="fv-tab fv-tab-green">GitHub</div>
               <div class="fv-tab fv-tab-green" style="opacity:.7;">Drive</div>
