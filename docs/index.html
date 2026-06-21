@@ -107,11 +107,11 @@
       gap: 32px;
     }
     .nav-logo {
-      font-size: 1.15rem;
+      font-size: 1.48rem;
       font-weight: 800;
       color: var(--purple);
       letter-spacing: -.5px;
-      display: flex; align-items: center; gap: 8px;
+      display: flex; align-items: center; gap: 10px;
       text-decoration: none;
     }
     .nav-logo-icon {
@@ -1247,7 +1247,7 @@
   <!-- ═══════════════════════════════════════════ NAV -->
   <nav>
     <a class="nav-logo" href="#">
-      <img src="icon_v2.png" alt="StacTab" style="width:28px;height:28px;border-radius:7px;object-fit:contain;">
+      <img src="icon_v2.png" alt="StacTab" style="width:36px;height:36px;border-radius:9px;object-fit:contain;">
       StacTab
     </a>
     <ul class="nav-links">
@@ -1406,136 +1406,104 @@
           </p>
         </div>
 
-        <!-- Before / After tab visual -->
-        <div class="tab-compare-wrap">
+        <!-- Before → After vertical visual + search -->
+        <div class="fade-in fade-in-delay-2">
 
-          <div class="tab-compare-card fade-in fade-in-delay-1">
-            <div class="tcc-header">
-              <span class="tcc-badge tcc-badge-before">Before</span>
-              <div class="tcc-dots">
-                <div class="tcc-dot" style="background:#FF5F57;"></div>
-                <div class="tcc-dot" style="background:#FEBC2E;"></div>
-                <div class="tcc-dot" style="background:#28C840;"></div>
-              </div>
+          <!-- BEFORE: chaotic unlabeled tabs -->
+          <div style="background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);">
+            <div style="background:#E8EAED;padding:8px 10px 0;display:flex;gap:2px;align-items:flex-end;flex-wrap:nowrap;overflow:hidden;">
+              <div class="fv-tab fv-tab-grey">github</div>
+              <div class="fv-tab fv-tab-grey" style="opacity:.85;">gmail</div>
+              <div class="fv-tab fv-tab-grey" style="opacity:.75;">docs</div>
+              <div class="fv-tab fv-tab-grey" style="opacity:.85;">youtube</div>
+              <div class="fv-tab fv-tab-grey" style="opacity:.7;">slack</div>
+              <div class="fv-tab fv-tab-grey" style="opacity:.8;">notion</div>
+              <div class="fv-tab fv-tab-grey" style="opacity:.65;">drive</div>
+              <div class="fv-tab fv-tab-grey" style="opacity:.7;">meet</div>
             </div>
-            <!-- Chrome-like tab bar: crowded unlabeled tabs -->
-            <div style="background:#DEE1E6;padding:6px 6px 0;display:flex;gap:1px;align-items:flex-end;overflow:hidden;">
-              <div style="background:#F1F3F4;border-radius:8px 8px 0 0;padding:5px 8px;font-size:.55rem;color:#5F6368;display:flex;align-items:center;gap:3px;min-width:0;flex:1;max-width:52px;white-space:nowrap;overflow:hidden;">
-                <div style="width:10px;height:10px;border-radius:2px;background:#9AA0A6;flex-shrink:0;"></div>
-                <span style="overflow:hidden;text-overflow:ellipsis;">github</span>
-                <span style="margin-left:auto;color:#9AA0A6;font-size:.5rem;">✕</span>
-              </div>
-              <div style="background:#F1F3F4;border-radius:8px 8px 0 0;padding:5px 8px;font-size:.55rem;color:#5F6368;display:flex;align-items:center;gap:3px;min-width:0;flex:1;max-width:52px;white-space:nowrap;overflow:hidden;">
-                <div style="width:10px;height:10px;border-radius:2px;background:#9AA0A6;flex-shrink:0;"></div>
-                <span style="overflow:hidden;text-overflow:ellipsis;">gmail</span>
-                <span style="margin-left:auto;color:#9AA0A6;font-size:.5rem;">✕</span>
-              </div>
-              <div style="background:#F1F3F4;border-radius:8px 8px 0 0;padding:5px 8px;font-size:.55rem;color:#5F6368;display:flex;align-items:center;gap:3px;min-width:0;flex:1;max-width:52px;white-space:nowrap;overflow:hidden;">
-                <div style="width:10px;height:10px;border-radius:2px;background:#9AA0A6;flex-shrink:0;"></div>
-                <span style="overflow:hidden;text-overflow:ellipsis;">docs</span>
-                <span style="margin-left:auto;color:#9AA0A6;font-size:.5rem;">✕</span>
-              </div>
-              <div style="background:#F1F3F4;border-radius:8px 8px 0 0;padding:5px 8px;font-size:.55rem;color:#5F6368;display:flex;align-items:center;gap:3px;min-width:0;flex:1;max-width:52px;white-space:nowrap;overflow:hidden;">
-                <div style="width:10px;height:10px;border-radius:2px;background:#9AA0A6;flex-shrink:0;"></div>
-                <span style="overflow:hidden;text-overflow:ellipsis;">youtube</span>
-                <span style="margin-left:auto;color:#9AA0A6;font-size:.5rem;">✕</span>
-              </div>
-              <div style="background:#F1F3F4;border-radius:8px 8px 0 0;padding:5px 8px;font-size:.55rem;color:#5F6368;display:flex;align-items:center;gap:3px;min-width:0;flex:1;max-width:52px;white-space:nowrap;overflow:hidden;">
-                <div style="width:10px;height:10px;border-radius:2px;background:#9AA0A6;flex-shrink:0;"></div>
-                <span style="overflow:hidden;text-overflow:ellipsis;">slack</span>
-                <span style="margin-left:auto;color:#9AA0A6;font-size:.5rem;">✕</span>
-              </div>
-              <div style="background:#FFFFFF;border-radius:8px 8px 0 0;padding:5px 8px;font-size:.55rem;color:#1F1F1F;display:flex;align-items:center;gap:3px;min-width:0;flex:1;max-width:52px;white-space:nowrap;overflow:hidden;box-shadow:0 -1px 4px rgba(0,0,0,.08);">
-                <div style="width:10px;height:10px;border-radius:2px;background:#9AA0A6;flex-shrink:0;"></div>
-                <span style="overflow:hidden;text-overflow:ellipsis;font-weight:600;">notion</span>
-                <span style="margin-left:auto;color:#9AA0A6;font-size:.5rem;">✕</span>
-              </div>
-              <div style="background:#F1F3F4;border-radius:8px 8px 0 0;padding:5px 4px;font-size:.55rem;color:#5F6368;display:flex;align-items:center;gap:2px;min-width:0;flex:1;max-width:36px;">
-                <div style="width:10px;height:10px;border-radius:2px;background:#9AA0A6;flex-shrink:0;"></div>
-                <span style="color:#9AA0A6;font-size:.5rem;">✕</span>
-              </div>
+            <div style="background:#fff;height:28px;border-top:2px solid #DEE1E6;display:flex;align-items:center;padding:0 10px;">
+              <div style="width:140px;height:12px;background:#F1F3F4;border-radius:6px;"></div>
             </div>
-            <div style="background:#FFFFFF;border-top:2px solid #DEE1E6;padding:5px 8px;display:flex;align-items:center;gap:6px;">
-              <div style="flex:1;background:#F1F3F4;border-radius:10px;height:16px;"></div>
-            </div>
-            <div style="padding:6px 10px 10px; font-size:.62rem; color:#9CA3AF; font-weight:500;">
-              12 tabs, no context, impossible to navigate
-            </div>
+            <div style="padding:6px 12px 10px;font-size:.65rem;color:#9CA3AF;font-weight:500;">8 unlabeled tabs. No context, no order.</div>
           </div>
 
-          <div class="tab-compare-card fade-in fade-in-delay-2">
-            <div class="tcc-header">
-              <span class="tcc-badge tcc-badge-after">After</span>
-              <div class="tcc-dots">
-                <div class="tcc-dot" style="background:#FF5F57;"></div>
-                <div class="tcc-dot" style="background:#FEBC2E;"></div>
-                <div class="tcc-dot" style="background:#28C840;"></div>
-              </div>
+          <!-- Swoosh arrow -->
+          <div style="display:flex;align-items:center;justify-content:center;padding:6px 0;gap:8px;">
+            <svg width="120" height="36" viewBox="0 0 120 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 8 C10 8, 60 2, 100 18" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="4 3" opacity=".6"/>
+              <path d="M94 12 L102 20 L106 10" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <span style="font-size:.7rem;font-weight:700;color:#8B5CF6;letter-spacing:.05em;text-transform:uppercase;">StacTab</span>
+          </div>
+
+          <!-- AFTER: color-coded grouped tabs -->
+          <div style="background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);">
+            <div style="background:#E8EAED;padding:8px 10px 0;display:flex;gap:3px;align-items:flex-end;flex-wrap:nowrap;overflow:hidden;">
+              <div class="fv-tab fv-tab-green">GitHub</div>
+              <div class="fv-tab fv-tab-green" style="opacity:.7;">Drive</div>
+              <div class="fv-tab fv-tab-red">Gmail</div>
+              <div class="fv-tab fv-tab-red" style="opacity:.7;">Meet</div>
+              <div class="fv-tab fv-tab-blue">Docs</div>
+              <div class="fv-tab fv-tab-blue" style="opacity:.7;">Notion</div>
+              <div class="fv-tab fv-tab-purple">YT</div>
+              <div class="fv-tab fv-tab-purple" style="opacity:.7;">Slack</div>
             </div>
-            <!-- Chrome-like tab bar with grouped tabs -->
-            <div style="background:#DEE1E6;padding:6px 6px 0;display:flex;flex-direction:column;gap:2px;">
-              <!-- GitHub group -->
-              <div style="display:flex;flex-direction:column;">
-                <div style="display:flex;align-items:center;gap:3px;padding:1px 4px;">
-                  <div style="width:8px;height:8px;border-radius:50%;background:#10B981;flex-shrink:0;"></div>
-                  <span style="font-size:.5rem;font-weight:700;color:#059669;letter-spacing:.04em;text-transform:uppercase;">GitHub</span>
-                </div>
-                <div style="display:flex;gap:1px;background:rgba(16,185,129,.15);border-radius:6px 6px 0 0;padding:3px 3px 0;margin:0 0 0 2px;">
-                  <div style="background:#F1F3F4;border-radius:6px 6px 0 0;padding:4px 7px;font-size:.52rem;color:#1F1F1F;display:flex;align-items:center;gap:3px;flex:1;max-width:60px;overflow:hidden;">
-                    <div style="width:8px;height:8px;border-radius:1px;background:#10B981;flex-shrink:0;"></div>
-                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Issues</span>
-                  </div>
-                  <div style="background:#F1F3F4;border-radius:6px 6px 0 0;padding:4px 7px;font-size:.52rem;color:#5F6368;display:flex;align-items:center;gap:3px;flex:1;max-width:60px;overflow:hidden;">
-                    <div style="width:8px;height:8px;border-radius:1px;background:#10B981;flex-shrink:0;"></div>
-                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">PRs</span>
-                  </div>
-                </div>
+            <div style="background:#fff;height:28px;border-top:2px solid #DEE1E6;display:flex;align-items:center;padding:0 10px;">
+              <div style="width:140px;height:12px;background:#F1F3F4;border-radius:6px;"></div>
+            </div>
+            <div style="padding:6px 12px 10px;font-size:.65rem;color:#059669;font-weight:600;">Grouped by domain. Color-coded automatically.</div>
+          </div>
+
+          <!-- Search visual below -->
+          <div style="margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);">
+            <div style="padding:10px 12px 6px;">
+              <div style="background:#F5F3FF;border:1px solid #E5E0FF;border-radius:8px;padding:7px 12px;display:flex;align-items:center;gap:8px;font-size:.75rem;margin-bottom:8px;">
+                <span style="color:#A78BFA;">🔍</span>
+                <span style="color:#1F1A33;font-weight:500;">youtu</span>
+                <span style="display:inline-block;width:1.5px;height:13px;background:#8B5CF6;animation:blink 1s infinite;"></span>
               </div>
-              <!-- Gmail group -->
-              <div style="display:flex;flex-direction:column;">
-                <div style="display:flex;align-items:center;gap:3px;padding:1px 4px;">
-                  <div style="width:8px;height:8px;border-radius:50%;background:#EF4444;flex-shrink:0;"></div>
-                  <span style="font-size:.5rem;font-weight:700;color:#DC2626;letter-spacing:.04em;text-transform:uppercase;">Gmail</span>
-                </div>
-                <div style="display:flex;gap:1px;background:rgba(239,68,68,.12);border-radius:6px 6px 0 0;padding:3px 3px 0;margin:0 0 0 2px;">
-                  <div style="background:#FFFFFF;border-radius:6px 6px 0 0;padding:4px 7px;font-size:.52rem;color:#1F1F1F;display:flex;align-items:center;gap:3px;flex:1;max-width:60px;overflow:hidden;box-shadow:0 -1px 3px rgba(0,0,0,.06);">
-                    <div style="width:8px;height:8px;border-radius:1px;background:#EF4444;flex-shrink:0;"></div>
-                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;">Inbox</span>
-                  </div>
-                  <div style="background:#F1F3F4;border-radius:6px 6px 0 0;padding:4px 7px;font-size:.52rem;color:#5F6368;display:flex;align-items:center;gap:3px;flex:1;max-width:60px;overflow:hidden;">
-                    <div style="width:8px;height:8px;border-radius:1px;background:#EF4444;flex-shrink:0;"></div>
-                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Sent</span>
+              <div style="background:#FAFAFE;border:1px solid #E5E0FF;border-radius:8px;overflow:hidden;">
+                <div style="padding:7px 12px;border-bottom:1px solid #F5F3FF;display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:.8rem;">▶️</span>
+                  <div>
+                    <div style="font-size:.7rem;font-weight:600;color:#1F1A33;"><span style="color:#8B5CF6;">Youtu</span>be · Lo-fi hip hop radio</div>
+                    <div style="font-size:.6rem;color:#9CA3AF;">youtube.com/watch?v=…</div>
                   </div>
                 </div>
-              </div>
-              <!-- Docs group -->
-              <div style="display:flex;flex-direction:column;">
-                <div style="display:flex;align-items:center;gap:3px;padding:1px 4px;">
-                  <div style="width:8px;height:8px;border-radius:50%;background:#3B82F6;flex-shrink:0;"></div>
-                  <span style="font-size:.5rem;font-weight:700;color:#2563EB;letter-spacing:.04em;text-transform:uppercase;">Docs</span>
-                </div>
-                <div style="display:flex;gap:1px;background:rgba(59,130,246,.12);border-radius:6px 6px 0 0;padding:3px 3px 0;margin:0 0 0 2px;">
-                  <div style="background:#F1F3F4;border-radius:6px 6px 0 0;padding:4px 7px;font-size:.52rem;color:#5F6368;display:flex;align-items:center;gap:3px;flex:1;max-width:60px;overflow:hidden;">
-                    <div style="width:8px;height:8px;border-radius:1px;background:#3B82F6;flex-shrink:0;"></div>
-                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Q3 Plan</span>
-                  </div>
-                  <div style="background:#F1F3F4;border-radius:6px 6px 0 0;padding:4px 7px;font-size:.52rem;color:#5F6368;display:flex;align-items:center;gap:3px;flex:1;max-width:60px;overflow:hidden;">
-                    <div style="width:8px;height:8px;border-radius:1px;background:#3B82F6;flex-shrink:0;"></div>
-                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Notes</span>
+                <div style="padding:7px 12px;display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:.8rem;">▶️</span>
+                  <div>
+                    <div style="font-size:.7rem;font-weight:600;color:#1F1A33;"><span style="color:#8B5CF6;">Youtu</span>be Studio</div>
+                    <div style="font-size:.6rem;color:#9CA3AF;">studio.youtube.com</div>
                   </div>
                 </div>
               </div>
             </div>
-            <div style="background:#FFFFFF;border-top:2px solid #DEE1E6;padding:5px 8px;display:flex;align-items:center;gap:6px;">
-              <div style="flex:1;background:#F1F3F4;border-radius:10px;height:16px;"></div>
-            </div>
-            <div style="padding:6px 10px 10px; font-size:.62rem; color:#059669; font-weight:600;">
-              Same tabs, grouped and color-coded automatically
-            </div>
+            <div style="padding:0 12px 10px;font-size:.65rem;color:#7C3AED;font-weight:600;">Find any open tab instantly. Press Alt+S from anywhere.</div>
           </div>
 
         </div>
       </div>
+
+      <!-- Bullet points + more features link -->
+      <div class="fade-in fade-in-delay-3" style="margin-top:40px;padding:28px 32px;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);">
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;">
+          <li style="display:flex;align-items:flex-start;gap:12px;">
+            <span style="width:22px;height:22px;border-radius:50%;background:rgba(139,92,246,.12);color:#8B5CF6;font-size:.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">⚡</span>
+            <span style="font-size:.9rem;color:var(--text);line-height:1.5;"><strong>Auto-grouping:</strong> StacTab watches your tabs in real time and groups matching domains the moment your threshold is crossed. No clicks needed.</span>
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:12px;">
+            <span style="width:22px;height:22px;border-radius:50%;background:rgba(139,92,246,.12);color:#8B5CF6;font-size:.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">🔍</span>
+            <span style="font-size:.9rem;color:var(--text);line-height:1.5;"><strong>Instant search:</strong> Hit <kbd style="background:#F5F3FF;border:1px solid #E5E0FF;border-radius:4px;padding:1px 5px;font-size:.8rem;font-family:monospace;">Alt+S</kbd> from anywhere to search every open tab by title or URL in real time.</span>
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:12px;">
+            <span style="width:22px;height:22px;border-radius:50%;background:rgba(139,92,246,.12);color:#8B5CF6;font-size:.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">🗄️</span>
+            <span style="font-size:.9rem;color:var(--text);line-height:1.5;"><strong>Workspace Vault:</strong> Archive entire sessions and restore them anytime. Never lose a tab again.</span>
+          </li>
+        </ul>
+        <a href="#features" style="display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:.85rem;font-weight:600;color:#8B5CF6;text-decoration:none;">See all features <span style="font-size:1rem;">→</span></a>
+      </div>
+
     </div>
   </section>
 
