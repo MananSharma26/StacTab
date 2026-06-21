@@ -105,7 +105,12 @@ function openDashboard() {
 function archiveTabs(tabsToArchive) {
     if (!tabsToArchive || tabsToArchive.length === 0) return;
     tabsToArchive = tabsToArchive.filter(t => { try { return new URL(t.url).protocol.startsWith('http'); } catch(e) { return false; } });
-    if (tabsToArchive.length === 0) return;
+    if (tabsToArchive.length === 0) {
+      chrome.action.setBadgeText({ text: '✗' });
+      chrome.action.setBadgeBackgroundColor({ color: '#EF4444' });
+      setTimeout(() => updateBadge(), 1500);
+      return;
+    }
     chrome.storage.local.get({ archives: [] }, (res) => {
       const dateStr = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
       const newItems = tabsToArchive.map(t => ({
