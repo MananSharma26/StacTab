@@ -27,6 +27,8 @@ function getSmartName(urlObj) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('StacTab: popup.js loaded');
+  try {
 
   const logo = document.getElementById('brand-logo');
   if(logo) {
@@ -265,9 +267,12 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   document.getElementById('arc-current').addEventListener('click', () => {
+    console.log('StacTab: arc-current clicked');
     chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
+      console.log('StacTab: got tabs', tabs);
       if (chrome.runtime.lastError) { console.error('StacTab:', chrome.runtime.lastError); return; }
       if (tabs && tabs[0]) archiveTabs([tabs[0]]);
+      else console.log('StacTab: no active tab found');
     });
   });
   document.getElementById('arc-all').addEventListener('click', () => {
@@ -305,4 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if(btnDashboard) {
       btnDashboard.addEventListener('click', openDashboard);
   }
+
+  console.log('StacTab: all handlers registered');
+  } catch(e) { console.error('StacTab INIT ERROR:', e); }
 });
