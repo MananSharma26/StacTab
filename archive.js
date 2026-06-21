@@ -170,54 +170,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function attachEventListeners() {
     document.querySelectorAll('.btn-restore-single').forEach(btn => btn.addEventListener('click', (e) => {
-      const id = e.target.getAttribute('data-id');
-      chrome.tabs.create({ url: e.target.getAttribute('data-url'), active: false });
+      const id = e.currentTarget.getAttribute('data-id');
+      chrome.tabs.create({ url: e.currentTarget.getAttribute('data-url'), active: false });
       removeItems([id]);
     }));
     document.querySelectorAll('.btn-restore-domain').forEach(btn => btn.addEventListener('click', (e) => {
-      const date = e.target.getAttribute('data-date');
-      const domain = e.target.getAttribute('data-domain');
+      const date = e.currentTarget.getAttribute('data-date');
+      const domain = e.currentTarget.getAttribute('data-domain');
       const itemsToRestore = fullArchives.filter(a => a.date === date && a.domain === domain);
       itemsToRestore.forEach(item => chrome.tabs.create({ url: item.url, active: false }));
       removeItems(itemsToRestore.map(i => String(i.id)));
     }));
     document.querySelectorAll('.btn-restore-day').forEach(btn => btn.addEventListener('click', (e) => {
-      const date = e.target.getAttribute('data-date');
+      const date = e.currentTarget.getAttribute('data-date');
       const itemsToRestore = fullArchives.filter(a => a.date === date);
       itemsToRestore.forEach(item => chrome.tabs.create({ url: item.url, active: false }));
       removeItems(itemsToRestore.map(i => String(i.id)));
     }));
 
     document.querySelectorAll('.btn-delete-single').forEach(btn => btn.addEventListener('click', (e) => {
-      const id = e.target.getAttribute('data-id');
+      const id = e.currentTarget.getAttribute('data-id');
       removeItems([id]);
     }));
     document.querySelectorAll('.btn-delete-domain').forEach(btn => btn.addEventListener('click', (e) => {
-      const date = e.target.getAttribute('data-date');
-      const domain = e.target.getAttribute('data-domain');
+      const date = e.currentTarget.getAttribute('data-date');
+      const domain = e.currentTarget.getAttribute('data-domain');
       removeItems(fullArchives.filter(a => a.date === date && a.domain === domain).map(i => String(i.id)));
     }));
     document.querySelectorAll('.btn-delete-day').forEach(btn => btn.addEventListener('click', (e) => {
-      const date = e.target.getAttribute('data-date');
+      const date = e.currentTarget.getAttribute('data-date');
       removeItems(fullArchives.filter(a => a.date === date).map(i => String(i.id)));
     }));
     
     document.querySelectorAll('.btn-new-window-day').forEach(btn => btn.addEventListener('click', (e) => {
-      const date = e.target.getAttribute('data-date');
+      const date = e.currentTarget.getAttribute('data-date');
       const itemsToRestore = fullArchives.filter(a => a.date === date);
       chrome.windows.create({ url: itemsToRestore.map(i => i.url), focused: true });
       removeItems(itemsToRestore.map(i => String(i.id)));
     }));
     document.querySelectorAll('.btn-new-window-domain').forEach(btn => btn.addEventListener('click', (e) => {
-      const date = e.target.getAttribute('data-date');
-      const domain = e.target.getAttribute('data-domain');
+      const date = e.currentTarget.getAttribute('data-date');
+      const domain = e.currentTarget.getAttribute('data-domain');
       const itemsToRestore = fullArchives.filter(a => a.date === date && a.domain === domain);
       chrome.windows.create({ url: itemsToRestore.map(i => i.url), focused: true });
       removeItems(itemsToRestore.map(i => String(i.id)));
     }));
 
     document.querySelectorAll('.btn-download-txt').forEach(btn => btn.addEventListener('click', (e) => {
-      const date = e.target.getAttribute('data-date');
+      const date = e.currentTarget.getAttribute('data-date');
       const itemsToExport = fullArchives.filter(a => a.date === date);
       let txtContent = `Stac Tab Vault - Archive for ${date}\n=========================================\n\n`;
       itemsToExport.forEach(item => txtContent += `[${item.domain}]\nTitle: ${item.title}\nURL: ${item.url}\n\n`);

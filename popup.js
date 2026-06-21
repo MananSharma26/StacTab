@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
       chrome.tabs.query({ currentWindow: true }, function(tabs) {
         const groups = {};
         tabs.forEach(tab => {
-          if (tab.groupId !== chrome.tabGroups.TAB_GROUP_ID_NONE) return;
+          if (chrome.tabGroups && tab.groupId !== chrome.tabGroups.TAB_GROUP_ID_NONE) return;
           try {
             const url = new URL(tab.url);
             if (!url.protocol.startsWith('http')) return;
@@ -219,7 +219,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  let sessionAbort = null;
   function showSessionModal(onConfirm) {
+    if (sessionAbort) sessionAbort.abort();
+    sessionAbort = new AbortController();
+    const sig = { signal: sessionAbort.signal };
     const modal = document.getElementById('session-modal');
     const input = document.getElementById('session-name-input');
     const confirmBtn = document.getElementById('session-confirm');
@@ -228,13 +232,13 @@ document.addEventListener('DOMContentLoaded', function() {
     modal.style.display = 'flex';
     setTimeout(() => input.focus(), 50);
 
-    function confirm() { modal.style.display = 'none'; onConfirm(input.value.trim() || null); cleanup(); }
-    function cancel() { modal.style.display = 'none'; cleanup(); }
-    function onKey(e) { if (e.key === 'Enter') confirm(); if (e.key === 'Escape') cancel(); }
-    confirmBtn.addEventListener('click', confirm, { once: true });
-    cancelBtn.addEventListener('click', cancel, { once: true });
-    input.addEventListener('keydown', onKey);
-    function cleanup() { input.removeEventListener('keydown', onKey); }
+    function done(val) { modal.style.display = 'none'; sessionAbort.abort(); onConfirm(val); }
+    confirmBtn.addEventListener('click', () => done(input.value.trim() || null), sig);
+    cancelBtn.addEventListener('click', () => { modal.style.display = 'none'; sessionAbort.abort(); }, sig);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') done(input.value.trim() || null);
+      if (e.key === 'Escape') { modal.style.display = 'none'; sessionAbort.abort(); }
+    }, sig);
   }
 
   function archiveTabs(tabsToArchive, sessionName = null) {
@@ -283,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
     showSessionModal((sessionName) => {
       chrome.tabs.query({ currentWindow: true }, (tabs) => {
         if (chrome.runtime.lastError) { console.error('StacTab:', chrome.runtime.lastError); return; }
-        archiveTabs(tabs.filter(t => !t.url.includes('archive.html')), sessionName);
+        archiveTabs(tabs.filter(t => t.url && !t.url.includes('archive.html')), sessionName);
       });
     });
   });
@@ -294,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!activeTab) return;
       chrome.tabs.query({ currentWindow: true }, (tabs) => {
         if (chrome.runtime.lastError) return;
-        archiveTabs(tabs.filter(t => t.index < activeTab.index && !t.pinned && !t.url.includes('archive.html')));
+        archiveTabs(tabs.filter(t => t.url && t.index < activeTab.index && !t.pinned && !t.url.includes('archive.html')));
       });
     });
   });
@@ -305,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!activeTab) return;
       chrome.tabs.query({ currentWindow: true }, (tabs) => {
         if (chrome.runtime.lastError) return;
-        archiveTabs(tabs.filter(t => t.index > activeTab.index && !t.url.includes('archive.html')));
+        archiveTabs(tabs.filter(t => t.url && t.index > activeTab.index && !t.url.includes('archive.html')));
       });
     });
   });
