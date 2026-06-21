@@ -1,6 +1,6 @@
 function escapeHTML(str) {
-  if (!str) return '';
-  return str.replace(/[&<>'"]/g, tag => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[tag] || tag));
+  if (str === null || str === undefined) return '';
+  return String(str).replace(/[&<>'"]/g, tag => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[tag] || tag));
 }
 
 let sortOrder = 'desc';
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const banner = document.getElementById('undo-banner');
       if (!res.lastArchive) { banner.style.display = 'none'; return; }
       const age = Date.now() - res.lastArchive.timestamp;
-      if (age > 60000) { banner.style.display = 'none'; chrome.storage.local.remove('lastArchive'); return; }
+      if (age > 30000) { banner.style.display = 'none'; chrome.storage.local.remove('lastArchive'); return; }
       banner.style.display = 'flex';
       const count = res.lastArchive.items.length;
       document.getElementById('undo-text').textContent = `Last archived: ${count} tab${count !== 1 ? 's' : ''} — restore and reopen?`;
