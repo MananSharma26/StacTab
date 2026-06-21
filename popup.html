@@ -86,6 +86,8 @@
     .group-row .arc-group-btn { flex: 1; }
     .split-group-btn { background: var(--surface); border: 1px solid var(--border); padding: 6px 8px; border-radius: 8px; font-size: 10px; font-weight: 500; color: var(--text-sub); cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; white-space: nowrap; }
     .split-group-btn:hover { border-color: var(--accent); color: var(--text-main); background: var(--surface-hover); }
+    .toast { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); background: var(--text-main); color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 11px; font-weight: 500; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 300; white-space: nowrap; }
+    .toast.show { opacity: 1; }
   </style>
 </head>
 <body>
@@ -144,6 +146,7 @@
       <button id="session-cancel" class="btn-cancel">Cancel</button>
     </div>
   </div>
+  <div id="toast" class="toast"></div>
   <script src="popup.js"></script>
 </body>
 </html>

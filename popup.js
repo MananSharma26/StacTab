@@ -32,6 +32,13 @@ document.addEventListener('DOMContentLoaded', function() {
     logo.addEventListener('error', function() { this.style.display = 'none'; });
   }
 
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1800);
+  }
+
   function groupColorToCss(color) {
     const map = { grey: '#9aa0a6', blue: '#1a73e8', red: '#d93025', yellow: '#f9ab00', green: '#1e8e3e', pink: '#e91e8c', purple: '#9334e6', cyan: '#007b83', orange: '#fa7b17' };
     return map[color] || '#9aa0a6';
@@ -233,10 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function archiveTabs(tabsToArchive, sessionName = null) {
     tabsToArchive = tabsToArchive.filter(t => { try { return new URL(t.url).protocol.startsWith('http'); } catch(e) { return false; } });
     if (tabsToArchive.length === 0) {
-      const btn = document.getElementById('btn-sort');
-      const orig = btn.textContent;
-      btn.textContent = 'Nothing to archive (no web tabs)';
-      setTimeout(() => { btn.innerHTML = '<span style="font-size: 16px;">✦</span> Organize tabs into groups'; }, 1500);
+      showToast('No web tabs to archive');
       return;
     }
     chrome.storage.local.get({ archives: [] }, (res) => {
