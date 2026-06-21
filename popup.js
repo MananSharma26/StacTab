@@ -45,15 +45,35 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!groups || groups.length === 0) { section.style.display = 'none'; return; }
       section.style.display = 'block';
       list.innerHTML = groups.map(g => `
-        <button class="arc-group-btn" data-group-id="${g.id}">
-          <span class="group-dot" style="background:${groupColorToCss(g.color)};"></span>
-          ${escapeHTML(g.title || 'Unnamed Group')}
-        </button>
+        <div class="group-row">
+          <button class="arc-group-btn" data-group-id="${escapeHTML(g.id)}">
+            <span class="group-dot" style="background:${groupColorToCss(g.color)};"></span>
+            ${escapeHTML(g.title || 'Unnamed Group')}
+          </button>
+          <button class="split-group-btn" data-group-id="${escapeHTML(g.id)}" title="Split to new window">↗</button>
+        </div>
       `).join('');
       document.querySelectorAll('.arc-group-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const groupId = parseInt(btn.dataset.groupId);
           chrome.tabs.query({ currentWindow: true, groupId }, tabs => archiveTabs(tabs));
+        });
+      });
+      document.querySelectorAll('.split-group-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const groupId = parseInt(btn.dataset.groupId);
+          chrome.tabs.query({ currentWindow: true, groupId }, (tabs) => {
+            if (!tabs || tabs.length === 0) return;
+            chrome.windows.create({ tabId: tabs[0].id, focused: true }, (newWin) => {
+              if (chrome.runtime.lastError || !newWin) return;
+              const remaining = tabs.slice(1);
+              remaining.forEach(t => {
+                chrome.tabs.move(t.id, { windowId: newWin.id, index: -1 }, () => {
+                  if (chrome.runtime.lastError) { /* tab may have closed */ }
+                });
+              });
+            });
+          });
         });
       });
     });
@@ -177,6 +197,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.getElementById('btn-sleep').addEventListener('click', () => chrome.tabs.query({ currentWindow: true, active: false }, tabs => tabs.forEach(t => { if (!t.discarded) chrome.tabs.discard(t.id); })));
   document.getElementById('btn-dupes').addEventListener('click', () => chrome.tabs.query({ currentWindow: true }, tabs => { const seen = new Set(); const dupes = []; tabs.forEach(t => seen.has(t.url) ? dupes.push(t.id) : seen.add(t.url)); chrome.tabs.remove(dupes); }));
+  document.getElementById('btn-merge').addEventListener('click', () => {
+    chrome.windows.getCurrent((currentWin) => {
+      chrome.tabs.query({}, (allTabs) => {
+        const tabsToMove = allTabs.filter(t => t.windowId !== currentWin.id && !t.pinned);
+        if (tabsToMove.length === 0) return;
+        tabsToMove.forEach(t => {
+          chrome.tabs.move(t.id, { windowId: currentWin.id, index: -1 }, () => {
+            if (chrome.runtime.lastError) { /* tab may have closed */ }
+          });
+        });
+      });
+    });
+  });
 
   function showSessionModal(onConfirm) {
     const modal = document.getElementById('session-modal');

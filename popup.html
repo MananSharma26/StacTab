@@ -82,6 +82,10 @@
     .arc-group-btn { background: var(--surface); border: 1px solid var(--border); padding: 8px 12px; border-radius: var(--radius-large); font-size: 12px; font-weight: 500; color: var(--text-main); cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; font-family: 'Inter', sans-serif; }
     .arc-group-btn:hover { border-color: var(--accent); background: var(--surface-hover); }
     .group-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .group-row { display: flex; gap: 6px; align-items: center; }
+    .group-row .arc-group-btn { flex: 1; }
+    .split-group-btn { background: var(--surface); border: 1px solid var(--border); padding: 8px 10px; border-radius: var(--radius-large); font-size: 11px; font-weight: 500; color: var(--text-sub); cursor: pointer; transition: all 0.2s ease; font-family: 'Inter', sans-serif; white-space: nowrap; }
+    .split-group-btn:hover { border-color: var(--accent); color: var(--text-main); background: var(--surface-hover); }
   </style>
 </head>
 <body>
@@ -113,6 +117,7 @@
   <div class="tool-bar">
     <button id="btn-sleep" class="tool-btn"><span class="tool-icon">☾</span><span>Sleep tabs</span></button>
     <button id="btn-dupes" class="tool-btn" style="color: var(--danger);"><span class="tool-icon">⦻</span><span>Dedupe tabs</span></button>
+    <button id="btn-merge" class="tool-btn"><span class="tool-icon">⊞</span><span>Merge windows</span></button>
   </div>
   <div class="section-header">
     <span class="section-title">Archive tabs</span>
@@ -126,7 +131,7 @@
   </div>
   <div id="groups-section">
     <div class="section-header" style="margin-top:12px;margin-bottom:8px;">
-      <span class="section-title">Archive a group</span>
+      <span class="section-title">Tab groups</span>
     </div>
     <div id="groups-list" class="groups-list"></div>
   </div>
