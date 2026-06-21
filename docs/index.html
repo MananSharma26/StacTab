@@ -567,21 +567,21 @@
       flex-direction: column;
     }
     @keyframes search-type {
-      /* Each pair creates an instant snap — no smooth interpolation */
-      0%,    9.9%  { width: 0ch }
-      10%,  19.9%  { width: 1ch }
-      20%,  29.9%  { width: 2ch }
-      30%,  39.9%  { width: 3ch }
-      40%,  49.9%  { width: 4ch }
-      50%,  59.9%  { width: 5ch }
-      60%,  69.9%  { width: 6ch }
-      70%,  83.9%  { width: 7ch }
-      84%,  100%   { width: 0ch }
+      /* Instant snap per character, 2s hold after full word, then reset */
+      0%,   4.9%  { width: 0ch }
+      5%,   9.9%  { width: 1ch }
+      10%,  14.9% { width: 2ch }
+      15%,  19.9% { width: 3ch }
+      20%,  24.9% { width: 4ch }
+      25%,  29.9% { width: 5ch }
+      30%,  34.9% { width: 6ch }
+      35%,  74.9% { width: 7ch }   /* hold ~2s */
+      75%,  100%  { width: 0ch }
     }
     @keyframes fade-in-results {
-      0%,   71%  { opacity: 0; transform: translateY(5px); }
-      79%,  83%  { opacity: 1; transform: translateY(0); }
-      88%, 100%  { opacity: 0; transform: translateY(0); }
+      0%,   37%   { opacity: 0; transform: translateY(5px); }
+      44%,  73%   { opacity: 1; transform: translateY(0); }
+      79%, 100%   { opacity: 0; transform: translateY(0); }
     }
 
     /* before/after tab visual */
@@ -1513,11 +1513,11 @@
               <!-- Animated search input -->
               <div style="background:#EDE9FE;border:1px solid #DDD6FE;border-radius:8px;padding:7px 12px;display:flex;align-items:center;gap:8px;font-size:.75rem;margin-bottom:8px;">
                 <span style="color:#A78BFA;">🔍</span>
-                <span style="color:#1F1A33;font-weight:600;font-family:monospace;overflow:hidden;white-space:nowrap;display:inline-block;animation:search-type 3.5s linear infinite;">youtube</span>
+                <span style="color:#1F1A33;font-weight:600;font-family:monospace;overflow:hidden;white-space:nowrap;display:inline-block;animation:search-type 5s linear infinite;">youtube</span>
                 <span style="display:inline-block;width:1.5px;height:13px;background:#8B5CF6;animation:blink 1s infinite;flex-shrink:0;"></span>
               </div>
               <!-- Results fade in after typing -->
-              <div style="background:#FAFAFE;border:1px solid #E5E0FF;border-radius:8px;overflow:hidden;animation:fade-in-results 3.5s ease infinite;">
+              <div style="background:#FAFAFE;border:1px solid #E5E0FF;border-radius:8px;overflow:hidden;animation:fade-in-results 5s ease infinite;">
                 <div style="padding:7px 12px;border-bottom:1px solid #F5F3FF;display:flex;align-items:center;gap:8px;">
                   <span style="font-size:.8rem;">▶️</span>
                   <div>
@@ -1800,115 +1800,73 @@
       <h2 class="section-title fade-in fade-in-delay-1">Up and running in <span style="color:#8B5CF6;">under 60 seconds.</span></h2>
       <p class="section-sub fade-in fade-in-delay-2">Install directly from source.</p>
 
-      <div class="install-grid">
-        <div>
+      <div style="margin-top:60px;">
 
-          <!-- Step 1: Get the files (two options side by side) -->
-          <div class="install-step fade-in fade-in-delay-1">
-            <div class="step-number">1</div>
-            <div class="step-content" style="flex:1;">
-              <strong>Get the files</strong>
-              <p style="margin-bottom:14px;">Choose the option that works best for you:</p>
-              <div class="install-options">
-
-                <!-- Option A: Download ZIP -->
-                <div class="install-option-card ioc-a">
-                  <div class="ioc-label">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Option A
-                  </div>
-                  <div class="ioc-title">Download ZIP</div>
-                  <div class="ioc-desc">No git required. Just download and unzip.</div>
-                  <a class="ioc-download-btn" href="https://github.com/MananSharma26/StacTab/archive/refs/heads/main.zip" download>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Download ZIP
-                  </a>
+        <!-- Step 1 -->
+        <div class="install-step fade-in fade-in-delay-1">
+          <div class="step-number">1</div>
+          <div class="step-content" style="flex:1;">
+            <strong>Get the files</strong>
+            <p style="margin-bottom:14px;">Choose the option that works best for you:</p>
+            <div class="install-options">
+              <div class="install-option-card ioc-a">
+                <div class="ioc-label">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Option A
                 </div>
-
-                <!-- Option B: Clone with Git -->
-                <div class="install-option-card ioc-b fade-in fade-in-delay-2">
-                  <div class="ioc-label">Option B</div>
-                  <div class="ioc-title">Clone with Git</div>
-                  <div class="ioc-desc">For developers who prefer the command line.</div>
-                  <div style="background:#0F0720; border-radius:7px; padding:8px 10px; font-family:'Menlo',monospace; font-size:.62rem; color:#A78BFA; word-break:break-all; line-height:1.6; border:1px solid rgba(139,92,246,.2);">
-                    <span style="color:#6B7280;">git clone </span><span style="color:#34D399;">https://github.com/MananSharma26/StacTab.git</span>
-                  </div>
+                <div class="ioc-title">Download ZIP</div>
+                <div class="ioc-desc">No git required. Just download and unzip.</div>
+                <a class="ioc-download-btn" href="https://github.com/MananSharma26/StacTab/archive/refs/heads/main.zip" download>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Download ZIP
+                </a>
+              </div>
+              <div class="install-option-card ioc-b fade-in fade-in-delay-2">
+                <div class="ioc-label">Option B</div>
+                <div class="ioc-title">Clone with Git</div>
+                <div class="ioc-desc">For developers who prefer the command line.</div>
+                <div style="background:#0F0720;border-radius:7px;padding:8px 10px;font-family:'Menlo',monospace;font-size:.62rem;color:#A78BFA;word-break:break-all;line-height:1.6;border:1px solid rgba(139,92,246,.2);">
+                  <span style="color:#6B7280;">git clone </span><span style="color:#34D399;">https://github.com/MananSharma26/StacTab.git</span>
                 </div>
-
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Step 2: Open chrome://extensions -->
-          <div class="install-step fade-in fade-in-delay-2">
-            <div class="step-number">2</div>
-            <div class="step-content">
-              <strong>Enable Developer Mode</strong>
-              <p>Open <code style="background:var(--bg); padding:2px 6px; border-radius:5px; font-size:.82rem; font-family:monospace; color:var(--purple);">chrome://extensions/</code> in a new tab, then toggle <em>Developer mode</em> on in the top-right corner. Click <em>Load unpacked</em>.</p>
-            </div>
+        <!-- Step 2 -->
+        <div class="install-step fade-in fade-in-delay-2">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <strong>Enable Developer Mode</strong>
+            <p>Open <code style="background:var(--bg);padding:2px 6px;border-radius:5px;font-size:.82rem;font-family:monospace;color:var(--purple);">chrome://extensions/</code> in a new tab, toggle <em>Developer mode</em> on in the top-right corner, then click <em>Load unpacked</em>.</p>
           </div>
+        </div>
 
-          <!-- Step 3: Load unpacked -->
-          <div class="install-step fade-in fade-in-delay-3">
-            <div class="step-number">3</div>
-            <div class="step-content">
-              <strong>Select the StacTab folder</strong>
-              <p>Point Chrome at the unzipped <strong>StacTab</strong> folder (or the cloned repo). It will appear in your toolbar immediately.</p>
-            </div>
+        <!-- Step 3 -->
+        <div class="install-step fade-in fade-in-delay-3">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <strong>Select the StacTab folder</strong>
+            <p>Point Chrome at the unzipped <strong>StacTab</strong> folder (or the cloned repo). It will appear in your toolbar immediately.</p>
           </div>
+        </div>
 
-          <!-- Success message -->
-          <div class="install-success fade-in fade-in-delay-4">
+        <!-- Bottom row: That's it + Fully private side by side -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);margin-top:0;" class="fade-in fade-in-delay-4">
+          <div class="install-success" style="border-radius:0;border-right:1px solid var(--border);">
             <span class="install-success-icon">✅</span>
             <div class="install-success-text">
-              <strong>That's it!</strong> Press <span class="kbd"><kbd>Alt</kbd><kbd>S</kbd></span> to open StacTab instantly from any tab. No restart needed.
+              <strong>That's it!</strong> Press <span class="kbd"><kbd>Alt</kbd><kbd>S</kbd></span> / <span class="kbd"><kbd>Option</kbd><kbd>S</kbd></span> to open StacTab instantly from any tab.
             </div>
           </div>
-
-        </div>
-
-        <div>
-          <div class="code-block fade-in fade-in-delay-2">
-            <div class="code-block-header">
-              <div class="code-dot" style="background:#FF5F57"></div>
-              <div class="code-dot" style="background:#FFBD2E"></div>
-              <div class="code-dot" style="background:#28C840"></div>
-              <span class="code-lang">bash</span>
-            </div>
-            <div class="code-body">
-<span class="code-comment"># Option A: download the zip</span>
-<span class="code-comment"># (click the button above, then unzip)</span>
-
-<span class="code-comment"># Option B: clone with git</span>
-<span class="code-cmd">git</span> clone <span class="code-url">https://github.com/MananSharma26/StacTab.git</span>
-
-<span class="code-comment"># Then in Chrome:</span>
-<span class="code-comment">#  1. chrome://extensions/</span>
-<span class="code-comment">#  2. Developer mode → ON</span>
-<span class="code-comment">#  3. Load unpacked → select /StacTab</span>
-<span class="code-comment">#  4. Press Alt+S and you're live!</span>
-            </div>
-          </div>
-
-          <div class="install-tip fade-in fade-in-delay-3">
-            <span class="install-tip-icon">💡</span>
-            <div class="install-tip-text">
-              <strong>Pro tip:</strong> After installing, press <span class="kbd"><kbd>Alt</kbd><kbd>S</kbd></span> from any tab to instantly open StacTab and search across all your open tabs. No need to click the toolbar icon.
-            </div>
-          </div>
-
-          <div class="install-tip fade-in fade-in-delay-4" style="margin-top:12px; border-color:rgba(52,211,153,.2); background:rgba(52,211,153,.05);">
-            <span class="install-tip-icon">🔒</span>
-            <div class="install-tip-text">
-              <strong style="color:#059669;">Fully private.</strong> StacTab only uses the
-              <code style="font-size:.78rem; background:rgba(0,0,0,.06); padding:1px 5px; border-radius:4px;">tabs</code>,
-              <code style="font-size:.78rem; background:rgba(0,0,0,.06); padding:1px 5px; border-radius:4px;">tabGroups</code>,
-              <code style="font-size:.78rem; background:rgba(0,0,0,.06); padding:1px 5px; border-radius:4px;">storage</code>, and
-              <code style="font-size:.78rem; background:rgba(0,0,0,.06); padding:1px 5px; border-radius:4px;">contextMenus</code> permissions.
-              No network requests. No analytics. No tracking. Ever.
+          <div style="background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(109,40,217,.13));padding:20px 24px;display:flex;align-items:center;gap:12px;">
+            <span style="font-size:1.1rem;flex-shrink:0;">🔒</span>
+            <div style="font-size:.82rem;line-height:1.6;color:#6D28D9;">
+              <strong style="color:#7C3AED;">Fully private.</strong> StacTab only requests the permissions it needs — tabs, storage, and context menus. No network requests, no analytics, no tracking. Ever.
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
