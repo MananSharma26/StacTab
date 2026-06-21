@@ -1422,36 +1422,52 @@
         <!-- Before → After vertical visual + search -->
         <div class="fade-in fade-in-delay-2">
 
-          <!-- BEFORE: chaotic unlabeled tabs -->
+          <!-- BEFORE: chaotic packed tabs -->
           <div style="background:#FFF7F7;border:1px solid #FECACA;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);">
-            <div style="background:#E8EAED;padding:8px 10px 0;display:flex;gap:2px;align-items:flex-end;flex-wrap:nowrap;overflow:hidden;">
-              <div class="fv-tab fv-tab-grey">github</div>
-              <div class="fv-tab fv-tab-grey" style="opacity:.85;">gmail</div>
-              <div class="fv-tab fv-tab-grey" style="opacity:.75;">docs</div>
-              <div class="fv-tab fv-tab-grey" style="opacity:.85;">youtube</div>
-              <div class="fv-tab fv-tab-grey" style="opacity:.7;">slack</div>
-              <div class="fv-tab fv-tab-grey" style="opacity:.8;">notion</div>
-              <div class="fv-tab fv-tab-grey" style="opacity:.65;">drive</div>
-              <div class="fv-tab fv-tab-grey" style="opacity:.7;">meet</div>
+            <div style="background:#E8EAED;padding:5px 6px 0;display:flex;gap:1px;align-items:flex-end;flex-wrap:wrap;overflow:hidden;max-height:52px;">
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;">gh</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.9;">G</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.85;">yt</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.8;">sl</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.9;">dr</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.75;">tw</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.85;">rd</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.7;">amz</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.8;">sp</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.9;">ln</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.75;">no</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.85;">ms</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.7;">jn</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.8;">cf</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.75;">md</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.85;">wk</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.7;">pm</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.8;">ap</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.9;">gm</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.75;">fb</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.8;">ig</div>
+              <div class="fv-tab fv-tab-grey" style="padding:3px 5px;max-width:28px;opacity:.7;">pi</div>
             </div>
             <div style="background:#fff;height:28px;border-top:2px solid #DEE1E6;display:flex;align-items:center;padding:0 10px;">
               <div style="width:140px;height:12px;background:#F1F3F4;border-radius:6px;"></div>
             </div>
-            <div style="padding:6px 12px 10px;font-size:.65rem;color:#9CA3AF;font-weight:500;">8 unlabeled tabs. No context, no order.</div>
+            <div style="padding:6px 12px 10px;font-size:.65rem;color:#EF4444;font-weight:600;">22 tabs. No order, no context.</div>
           </div>
 
           <!-- Swoosh arrow -->
-          <div style="display:flex;align-items:center;justify-content:center;padding:20px 0;">
+          <div style="display:flex;align-items:center;justify-content:center;padding:10px 0;">
             <svg width="260" height="62" viewBox="0 0 260 62" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="swoosh-grad" x1="0%" y1="50%" x2="100%" y2="50%">
-                  <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.15"/>
-                  <stop offset="60%" stop-color="#8B5CF6" stop-opacity="0.8"/>
-                  <stop offset="100%" stop-color="#7C3AED" stop-opacity="1"/>
+                  <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.1"/>
+                  <stop offset="65%" stop-color="#8B5CF6" stop-opacity="0.75"/>
+                  <stop offset="100%" stop-color="#7C3AED" stop-opacity="0.95"/>
                 </linearGradient>
               </defs>
-              <!-- Tapered calligraphic swoosh: thin ghost on the left, bold solid arrowhead on the right -->
-              <path d="M 16 13 C 38 3, 105 1, 183 33 L 210 50 L 180 41 C 106 20, 42 18, 20 19 Z" fill="url(#swoosh-grad)"/>
+              <!-- Tapered brush-stroke body -->
+              <path d="M 16 13 C 38 3, 108 1, 178 30 L 177 41 C 109 20, 42 18, 20 19 Z" fill="url(#swoosh-grad)"/>
+              <!-- Bold solid arrowhead -->
+              <polygon points="174,41 200,44 179,28" fill="#7C3AED"/>
             </svg>
           </div>
 
@@ -1459,13 +1475,9 @@
           <div style="background:#F0FFF5;border:1px solid #BBF7D0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);">
             <div style="background:#E8EAED;padding:8px 10px 0;display:flex;gap:3px;align-items:flex-end;flex-wrap:nowrap;overflow:hidden;">
               <div class="fv-tab fv-tab-green">GitHub</div>
-              <div class="fv-tab fv-tab-green" style="opacity:.7;">Drive</div>
               <div class="fv-tab fv-tab-red">Gmail</div>
-              <div class="fv-tab fv-tab-red" style="opacity:.7;">Meet</div>
               <div class="fv-tab fv-tab-blue">Docs</div>
-              <div class="fv-tab fv-tab-blue" style="opacity:.7;">Notion</div>
-              <div class="fv-tab fv-tab-purple">YT</div>
-              <div class="fv-tab fv-tab-purple" style="opacity:.7;">Slack</div>
+              <div class="fv-tab fv-tab-purple">Slack</div>
             </div>
             <div style="background:#fff;height:28px;border-top:2px solid #DEE1E6;display:flex;align-items:center;padding:0 10px;">
               <div style="width:140px;height:12px;background:#F1F3F4;border-radius:6px;"></div>
@@ -1473,8 +1485,8 @@
             <div style="padding:6px 12px 10px;font-size:.65rem;color:#059669;font-weight:600;">Grouped by domain. Color-coded automatically.</div>
           </div>
 
-          <!-- Search visual below -->
-          <div style="margin-top:30px;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);">
+          <!-- Search visual below — separate benefit, visually distinct -->
+          <div style="margin-top:48px;background:#F5F3FF;border:2px solid #DDD6FE;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);">
             <div style="padding:10px 12px 6px;">
               <div style="background:#F5F3FF;border:1px solid #E5E0FF;border-radius:8px;padding:7px 12px;display:flex;align-items:center;gap:8px;font-size:.75rem;margin-bottom:8px;">
                 <span style="color:#A78BFA;">🔍</span>
@@ -1498,7 +1510,7 @@
                 </div>
               </div>
             </div>
-            <div style="padding:0 12px 10px;font-size:.65rem;color:#7C3AED;font-weight:600;">Find any open tab instantly. Alt+S on Windows · ⌥S on Mac.</div>
+            <div style="padding:0 12px 10px;font-size:.65rem;color:#7C3AED;font-weight:600;">Find any open tab instantly. Alt+S on Windows · Option+S on Mac.</div>
           </div>
 
         </div>
@@ -1597,7 +1609,7 @@
           <div class="feature-title">Live Tab Search</div>
           <div class="feature-desc">
             Instantly filter all open tabs by title or URL as you type.
-            Hit <span class="kbd"><kbd>Alt</kbd><kbd>S</kbd></span> (Windows/Linux) or <span class="kbd"><kbd>⌥ Option</kbd><kbd>S</kbd></span> (Mac)
+            Hit <span class="kbd"><kbd>Alt</kbd><kbd>S</kbd></span> on Windows / <span class="kbd"><kbd>Option</kbd><kbd>S</kbd></span> on Mac
             to open StacTab and jump directly to the search. No more hunting through tab rows.
           </div>
           <span class="feature-tag">Alt+S · ⌥S</span>
