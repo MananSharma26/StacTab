@@ -1256,6 +1256,15 @@
       .footer-bottom { flex-direction: column; align-items: flex-start; }
       .hero-headline { letter-spacing: -1.5px; }
 
+      /* Install bottom banners: stack vertically on mobile */
+      .install-bottom-row {
+        grid-template-columns: 1fr !important;
+      }
+      .install-bottom-row > div:first-child {
+        border-right: none !important;
+        border-bottom: 1px solid var(--border);
+      }
+
       /* Mobile feature grid: 2 compact tiles per row */
       .features-grid {
         grid-template-columns: 1fr 1fr;
@@ -1889,17 +1898,17 @@
         </div>
 
         <!-- Bottom row: That's it + Fully private side by side, equal height -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);margin-top:0;align-items:stretch;" class="fade-in fade-in-delay-4">
-          <div style="background:rgba(16,185,129,.08);border-right:1px solid var(--border);padding:18px 20px;display:flex;gap:10px;align-items:center;">
+        <div class="install-bottom-row fade-in fade-in-delay-4" style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);margin-top:0;align-items:stretch;">
+          <div style="background:rgba(16,185,129,.08);border-right:1px solid var(--border);padding:16px 20px;display:flex;gap:10px;align-items:center;">
             <span style="font-size:1.1rem;flex-shrink:0;">✅</span>
-            <div style="font-size:.82rem;color:#065F46;line-height:1.6;">
-              <strong style="color:#047857;">That's it!</strong> Press <span class="kbd"><kbd>Alt</kbd><kbd>S</kbd></span> / <span class="kbd"><kbd>Option</kbd><kbd>S</kbd></span> to open StacTab instantly from any tab.
+            <div style="font-size:.82rem;color:#065F46;line-height:1.5;">
+              <strong style="color:#047857;">You're live.</strong> Press <span class="kbd"><kbd>Alt</kbd><kbd>S</kbd></span> / <span class="kbd"><kbd>Option</kbd><kbd>S</kbd></span> from any tab.
             </div>
           </div>
-          <div style="background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(109,40,217,.13));padding:18px 20px;display:flex;align-items:center;gap:10px;">
+          <div style="background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(109,40,217,.13));padding:16px 20px;display:flex;align-items:center;gap:10px;">
             <span style="font-size:1.1rem;flex-shrink:0;">🔒</span>
-            <div style="font-size:.82rem;line-height:1.6;color:#6D28D9;">
-              <strong style="color:#7C3AED;">Fully private.</strong> Only requests the permissions it needs: tabs, storage, and context menus. No excess permissions, ever.
+            <div style="font-size:.82rem;line-height:1.5;color:#6D28D9;">
+              <strong style="color:#7C3AED;">Fully private.</strong> No network requests, no analytics, no tracking.
             </div>
           </div>
         </div>
