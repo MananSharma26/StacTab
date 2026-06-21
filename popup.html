@@ -20,7 +20,7 @@
       background: var(--bg); color: var(--text-main); user-select: none; -webkit-font-smoothing: antialiased;
       position: relative; overflow: hidden;
     }
-    .profile-card { background: var(--surface); border-radius: var(--radius-large); padding: 10px 14px; display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--border); margin-bottom: 12px; }
+    .profile-card { background: var(--surface); border-radius: var(--radius-large); padding: 8px 12px; display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--border); margin-bottom: 10px; }
     .profile-card-row { display: flex; align-items: center; justify-content: space-between; }
     .threshold-row { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 8px; }
     .threshold-label { font-size: 11px; font-weight: 500; color: var(--text-sub); }
@@ -49,47 +49,43 @@
     .search-item.active, .search-item:hover { background: #F5F3FF; }
     .search-item-title { font-size: 12px; font-weight: 500; color: var(--text-main); }
     .search-item-url { font-size: 10px; color: var(--text-sub); }
-    .hero-btn { 
-      width: 100%; padding: 11px; 
-      background: var(--accent); /* Changed to accent color */
-      color: #FFFFFF; /* Changed to white */
-      border: none; border-radius: var(--radius-large); 
-      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; 
-      cursor: pointer; transition: all 0.2s ease; margin-bottom: 12px; 
-      display: flex; align-items: center; justify-content: center; gap: 8px; 
+    .hero-btn {
+      width: 100%; padding: 9px;
+      background: var(--accent);
+      color: #FFFFFF;
+      border: none; border-radius: var(--radius-large);
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s ease; margin-bottom: 10px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
     }
     .hero-btn:hover { opacity: 0.9; }
-    .tool-bar { display: flex; background: var(--surface); border-radius: var(--radius-large); padding: 4px; border: 1px solid var(--border); margin-bottom: 16px; gap: 2px; }
-    .tool-btn { flex: 1; padding: 8px 0; background: transparent; border: none; border-radius: 8px; font-size: 12px; font-weight: 500; color: var(--text-sub); cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .tool-bar { display: flex; background: var(--surface); border-radius: var(--radius-large); padding: 3px; border: 1px solid var(--border); margin-bottom: 10px; gap: 2px; }
+    .tool-btn { flex: 1; padding: 6px 0; background: transparent; border: none; border-radius: 8px; font-size: 11px; font-weight: 500; color: var(--text-sub); cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; gap: 1px; }
     .tool-btn:hover { background: var(--bg); }
-    .tool-icon { font-size: 15px; }
-    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; padding: 0 4px; }
+    .tool-icon { font-size: 13px; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; padding: 0 4px; }
     .section-title { font-size: 12px; font-weight: 600; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.5px; }
     .dash-link { font-size: 12px; font-weight: 500; color: var(--accent); text-decoration: none; cursor: pointer; transition: 0.2s; background: rgba(139, 92, 246, 0.05); padding: 4px 8px; border-radius: 6px;}
     .dash-link:hover { background: rgba(139, 92, 246, 0.1); }
-    .archive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-    .arc-btn { background: var(--surface); border: 1px solid var(--border); padding: 12px 8px; border-radius: var(--radius-large); font-size: 12px; font-weight: 500; color: var(--text-main); cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+    .archive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .arc-btn { background: var(--surface); border: 1px solid var(--border); padding: 8px 8px; border-radius: var(--radius-large); font-size: 11px; font-weight: 500; color: var(--text-main); cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
     .arc-btn:hover { border-color: var(--accent); background: var(--surface-hover); }
-    .arc-icon { color: var(--text-sub); font-size: 18px; }
+    .arc-icon { color: var(--text-sub); font-size: 14px; }
     #session-modal { display: none; position: absolute; inset: 0; background: var(--surface); border-radius: var(--radius-large); padding: 20px; z-index: 200; flex-direction: column; gap: 12px; border: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
     .session-modal-title { font-size: 13px; font-weight: 600; color: var(--text-main); }
     .session-modal-hint { font-size: 11px; color: var(--text-sub); margin-top: -6px; }
     .session-modal-actions { display: flex; gap: 8px; margin-top: 4px; }
     .btn-cancel { flex: 1; padding: 9px; background: transparent; border: 1px solid var(--border); border-radius: var(--radius-large); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-sub); cursor: pointer; transition: 0.2s; }
     .btn-cancel:hover { background: var(--bg); }
-    #groups-section { display: none; margin-top: 12px; }
-    .groups-list { display: flex; flex-direction: column; gap: 6px; }
-    .arc-group-btn { background: var(--surface); border: 1px solid var(--border); padding: 8px 12px; border-radius: var(--radius-large); font-size: 12px; font-weight: 500; color: var(--text-main); cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; font-family: 'Inter', sans-serif; }
+    #groups-section { display: none; margin-top: 8px; }
+    .groups-list { display: flex; flex-direction: column; gap: 4px; }
+    .arc-group-btn { background: var(--surface); border: 1px solid var(--border); padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 500; color: var(--text-main); cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; font-family: 'Inter', sans-serif; }
     .arc-group-btn:hover { border-color: var(--accent); background: var(--surface-hover); }
     .group-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .group-row { display: flex; gap: 4px; align-items: stretch; }
-    .group-name { flex: 1; display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-large) 0 0 var(--radius-large); font-size: 12px; font-weight: 500; color: var(--text-main); overflow: hidden; min-width: 0; }
-    .group-name span.group-dot { flex-shrink: 0; }
-    .group-action-btn { padding: 8px 10px; border: 1px solid var(--border); font-size: 10px; font-weight: 600; color: var(--text-sub); cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; white-space: nowrap; background: var(--surface); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; }
-    .group-action-btn:first-of-type { border-radius: 0; border-left: none; }
-    .group-action-btn:last-of-type { border-radius: 0 var(--radius-large) var(--radius-large) 0; border-left: none; }
-    .group-action-btn:hover { border-color: var(--accent); color: var(--text-main); background: var(--surface-hover); }
-    .group-action-label { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+    .group-row { display: flex; gap: 4px; align-items: center; }
+    .group-row .arc-group-btn { flex: 1; }
+    .split-group-btn { background: var(--surface); border: 1px solid var(--border); padding: 6px 8px; border-radius: 8px; font-size: 10px; font-weight: 500; color: var(--text-sub); cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; white-space: nowrap; }
+    .split-group-btn:hover { border-color: var(--accent); color: var(--text-main); background: var(--surface-hover); }
   </style>
 </head>
 <body>

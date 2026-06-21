@@ -46,16 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
       section.style.display = 'block';
       list.innerHTML = groups.map(g => `
         <div class="group-row">
-          <div class="group-name">
+          <button class="arc-group-btn" data-group-id="${escapeHTML(g.id)}" title="Archive this group">
             <span class="group-dot" style="background:${groupColorToCss(g.color)};"></span>
             ${escapeHTML(g.title || 'Unnamed Group')}
-          </div>
-          <button class="arc-group-btn group-action-btn" data-group-id="${escapeHTML(g.id)}" title="Archive this group">
-            <span>📂</span><span class="group-action-label">Archive</span>
           </button>
-          <button class="split-group-btn group-action-btn" data-group-id="${escapeHTML(g.id)}" title="Split to new window">
-            <span>↗</span><span class="group-action-label">Split</span>
-          </button>
+          <button class="split-group-btn" data-group-id="${escapeHTML(g.id)}" title="Split to new window">Split</button>
         </div>
       `).join('');
       document.querySelectorAll('.arc-group-btn').forEach(btn => {
