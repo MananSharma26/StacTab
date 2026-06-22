@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — StacTab</title>
+  <link rel="icon" href="icon_v2.png" type="image/png">
+  <meta name="description" content="StacTab Privacy Policy — no personal data collected, no network requests, fully local." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple:      #8B5CF6;
+      --purple-dark: #6D28D9;
+      --purple-deep: #4C1D95;
+      --purple-light:#A78BFA;
+      --purple-pale: #DDD6FE;
+      --bg:          #F5F3FF;
+      --surface:     #FFFFFF;
+      --border:      #E5E0FF;
+      --text:        #1F1A33;
+      --sub:         #6B628D;
+      --danger:      #EF4444;
+      --green:       #10B981;
+      --red:         #EF4444;
+      --blue:        #3B82F6;
+      --radius:      16px;
+      --radius-sm:   10px;
+      --shadow:      0 4px 24px rgba(139,92,246,.12);
+      --shadow-lg:   0 12px 48px rgba(139,92,246,.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--purple-pale); border-radius: 99px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(245,243,255,.8);
+      border-bottom: 1px solid var(--border);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 clamp(20px, 5vw, 64px);
+      gap: 32px;
+    }
+    .nav-logo {
+      font-size: 1.78rem;
+      font-weight: 800;
+      color: var(--purple);
+      letter-spacing: -.5px;
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+      margin-left: -14px;
+    }
+    .nav-links {
+      display: flex; gap: 24px; margin-left: auto; align-items: center;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--sub);
+      font-size: .875rem;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--purple); }
+    .nav-cta {
+      background: var(--purple);
+      color: #fff !important;
+      padding: 8px 18px;
+      border-radius: 99px;
+      font-weight: 600 !important;
+      font-size: .8rem !important;
+      transition: background .2s, box-shadow .2s, transform .15s !important;
+      box-shadow: 0 2px 10px rgba(139,92,246,.35);
+    }
+    .nav-cta:hover {
+      background: var(--purple-dark) !important;
+      box-shadow: 0 4px 18px rgba(139,92,246,.45) !important;
+      transform: translateY(-1px) !important;
+    }
+
+    /* ── PAGE CONTENT ── */
+    .page-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 100px clamp(20px, 6vw, 48px) 80px;
+    }
+
+    .page-header {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -.5px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .page-header .updated {
+      font-size: .82rem;
+      color: var(--sub);
+      font-weight: 500;
+    }
+    .page-header .tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16,185,129,.1);
+      border: 1px solid rgba(16,185,129,.25);
+      color: #065f46;
+      font-size: .78rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 16px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+    .section h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--purple-dark);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.1em;
+      background: linear-gradient(180deg, var(--purple), var(--purple-dark));
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .section p {
+      color: var(--sub);
+      font-size: .95rem;
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+    .section p:last-child { margin-bottom: 0; }
+    .section ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .section ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .92rem;
+      color: var(--sub);
+      line-height: 1.6;
+    }
+    .section ul li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .perm-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .perm-badge {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--purple-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow);
+    }
+    .perm-badge .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--purple);
+      flex-shrink: 0;
+    }
+
+    .callout {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--purple);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      margin: 20px 0;
+      font-size: .9rem;
+      color: var(--sub);
+      line-height: 1.7;
+      box-shadow: var(--shadow);
+    }
+    .callout strong { color: var(--text); }
+
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: var(--shadow);
+      margin-top: 14px;
+    }
+    .contact-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .contact-card p {
+      margin: 0;
+      font-size: .88rem;
+      color: var(--sub);
+      line-height: 1.6;
+    }
+    .contact-card a {
+      color: var(--purple);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .contact-card a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0F0720;
+      padding: clamp(48px, 8vw, 80px) clamp(20px, 6vw, 80px);
+      position: relative;
+      overflow: hidden;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(139,92,246,.1), transparent 70%);
+      bottom: -100px; left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .footer-inner {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 48px;
+    }
+    .footer-brand-name {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -.5px;
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px;
+    }
+    .footer-brand-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .95rem;
+    }
+    .footer-brand-desc { font-size: .85rem; color: rgba(255,255,255,.4); line-height: 1.65; max-width: 260px; }
+    .footer-license {
+      margin-top: 24px;
+      font-size: .72rem;
+      color: rgba(255,255,255,.25);
+      letter-spacing: .02em;
+    }
+    .footer-col-title {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      margin-bottom: 18px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a {
+      text-decoration: none;
+      font-size: .85rem;
+      color: rgba(255,255,255,.45);
+      transition: color .2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .footer-links a:hover { color: var(--purple-light); }
+    .footer-bottom {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.07);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom-text {
+      font-size: .78rem;
+      color: rgba(255,255,255,.25);
+    }
+    .footer-bottom-text a {
+      color: var(--purple-light);
+      text-decoration: none;
+    }
+    .footer-bottom-text a:hover { text-decoration: underline; }
+    .footer-heart { color: var(--danger); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links li:not(:last-child) { display: none; }
+      .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .perm-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="icon_v2.png" alt="StacTab" style="width:43px;height:43px;border-radius:10px;object-fit:contain;">
+      StacTab
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#vault">Vault</a></li>
+      <li><a href="index.html#install">Install</a></li>
+      <li>
+        <a class="nav-cta" href="https://github.com/MananSharma26/StacTab" target="_blank" rel="noopener">
+          ⭐ GitHub
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ── CONTENT ── -->
+  <main class="page-wrap">
+    <header class="page-header">
+      <div class="tagline">Privacy First</div>
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: June 2026</p>
+    </header>
+
+    <div class="callout">
+      <strong>The short version:</strong> StacTab collects absolutely no personal data. It makes no network requests. Everything stays on your device. There are no analytics, no trackers, and no third parties involved.
+    </div>
+
+    <div class="section">
+      <h2>Data Collection</h2>
+      <p>StacTab does not collect, transmit, or share any personal data whatsoever. The extension operates entirely within your browser with no outbound connections.</p>
+      <ul>
+        <li>No personal information is collected</li>
+        <li>No usage analytics or telemetry</li>
+        <li>No crash reports sent to any server</li>
+        <li>No identifiers, cookies, or fingerprinting</li>
+        <li>No data is ever sent outside your device</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Local Storage Only</h2>
+      <p>The only data StacTab stores is your tab archive — sessions you explicitly save to the Workspace Vault. This data is stored exclusively via <code style="background:rgba(139,92,246,.1);color:var(--purple-dark);padding:1px 6px;border-radius:4px;font-size:.88em;">chrome.storage.local</code>, which means:</p>
+      <ul>
+        <li>Data lives only in your browser on your device</li>
+        <li>It is never synced to Google servers or any third party</li>
+        <li>You can clear it at any time from Chrome's extension storage settings</li>
+        <li>Uninstalling the extension removes all stored data</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Network Requests</h2>
+      <p>StacTab makes zero network requests. It does not communicate with any external server, API, or service — ever. All tab management, grouping, deduplication, and archiving happen entirely within your browser using built-in Chrome extension APIs.</p>
+    </div>
+
+    <div class="section">
+      <h2>Permissions</h2>
+      <p>StacTab requests only the minimum permissions required for its core functionality. Here is what each permission is used for:</p>
+      <div class="perm-grid">
+        <div class="perm-badge"><span class="dot"></span>tabs</div>
+        <div class="perm-badge"><span class="dot"></span>tabGroups</div>
+        <div class="perm-badge"><span class="dot"></span>storage</div>
+        <div class="perm-badge"><span class="dot"></span>contextMenus</div>
+      </div>
+      <ul style="margin-top:18px;">
+        <li><strong style="color:var(--text);margin-right:4px;">tabs</strong> — read tab titles and URLs to enable search, grouping, and deduplication</li>
+        <li><strong style="color:var(--text);margin-right:4px;">tabGroups</strong> — create and manage Chrome tab groups by domain</li>
+        <li><strong style="color:var(--text);margin-right:4px;">storage</strong> — save your Workspace Vault sessions locally via chrome.storage.local</li>
+        <li><strong style="color:var(--text);margin-right:4px;">contextMenus</strong> — add right-click menu options for quick tab actions</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Analytics &amp; Tracking</h2>
+      <p>There are no analytics tools, tracking pixels, advertising SDKs, or third-party scripts of any kind embedded in StacTab. The extension contains only its own code — no external libraries are loaded at runtime.</p>
+    </div>
+
+    <div class="section">
+      <h2>Third Parties</h2>
+      <p>StacTab has no relationship with any third party services. No data is shared with, sold to, or accessible by any third party. The extension does not integrate with any external platforms.</p>
+    </div>
+
+    <div class="section">
+      <h2>Children's Privacy</h2>
+      <p>StacTab does not collect any data from anyone, including children. Because no personal information is collected, there are no special considerations needed for users of any age.</p>
+    </div>
+
+    <div class="section">
+      <h2>Changes to This Policy</h2>
+      <p>If the privacy policy ever changes in a meaningful way, the updated date at the top of this page will reflect that change, and the update will be noted in the extension's release notes on GitHub. Given that StacTab is designed to collect no data, significant changes to this policy are not anticipated.</p>
+    </div>
+
+    <div class="section">
+      <h2>Contact</h2>
+      <p>Have a question, concern, or found an issue? Open a ticket on GitHub:</p>
+      <div class="contact-card">
+        <div class="contact-icon">🐛</div>
+        <p>
+          Report issues or ask privacy questions at the
+          <a href="https://github.com/MananSharma26/StacTab/issues" target="_blank" rel="noopener">
+            StacTab GitHub Issues page
+          </a>.
+          All inquiries are welcome and will be responded to promptly.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand-name">
+          <div class="footer-brand-icon">🗂️</div>
+          StacTab
+        </div>
+        <p class="footer-brand-desc">
+          A free, open-source Chrome extension that brings order to tab chaos.
+          Auto-groups, sleeps, dedupes, and archives your browser sessions,
+          all locally, all privately.
+        </p>
+        <p class="footer-license">MIT License &nbsp;·&nbsp; v1.5.0</p>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Links</p>
+        <ul class="footer-links">
+          <li><a href="https://github.com/MananSharma26/StacTab" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="opacity:.6"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub Repository
+          </a></li>
+          <li><a href="https://github.com/MananSharma26/StacTab/issues" target="_blank" rel="noopener">
+            🐛 Report a Bug
+          </a></li>
+          <li><a href="https://github.com/MananSharma26/StacTab/issues" target="_blank" rel="noopener">
+            💡 Request a Feature
+          </a></li>
+          <li><a href="https://github.com/MananSharma26/StacTab/blob/main/LICENSE" target="_blank" rel="noopener">
+            📄 MIT License
+          </a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Legal</p>
+        <ul class="footer-links">
+          <li><a href="privacy.html">🔒 Privacy Policy</a></li>
+          <li><a href="https://github.com/MananSharma26/StacTab/blob/main/LICENSE" target="_blank" rel="noopener">📄 MIT License</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-bottom-text">
+        Made with <span class="footer-heart">♥</span> by
+        <a href="https://github.com/MananSharma26" target="_blank" rel="noopener">Manan Sharma</a>
+        &nbsp;·&nbsp; Released under the MIT License
+      </p>
+      <p class="footer-bottom-text">
+        <a href="https://github.com/MananSharma26/StacTab" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky nav shadow on scroll
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.boxShadow = window.scrollY > 20
+        ? '0 2px 20px rgba(139,92,246,.12)'
+        : 'none';
+    }, { passive: true });
+  </script>
+</body>
+</html>

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Stac Tab",
-  "version": "1.4.2",
-  "description": "Auto-groups tabs, sorts by URL, sleeps inactive tabs, and securely manages sessions.",
+  "name": "StacTab",
+  "version": "1.5.0",
+  "description": "Auto-groups tabs by domain, sleeps inactive tabs, deduplicates, and archives sessions to a searchable Workspace Vault.",
   "permissions": ["tabs", "tabGroups", "storage", "contextMenus"],
   "background": { "service_worker": "background.js" },
   "action": { 
