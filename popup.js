@@ -27,6 +27,18 @@ function getSmartName(urlObj) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  // Mac: swap "Alt" labels to "⌥" (Option key)
+  const isMac = navigator.platform.toUpperCase().includes('MAC') || navigator.userAgent.includes('Mac');
+  if (isMac) {
+    const searchInput = document.getElementById('live-search');
+    if (searchInput) searchInput.placeholder = 'Search tabs... (⌥S)';
+    const sortBtn = document.getElementById('btn-sort');
+    if (sortBtn) {
+      const shortcutSpan = sortBtn.querySelector('span[style*="opacity"]');
+      if (shortcutSpan) shortcutSpan.textContent = '⌥G';
+    }
+  }
+
   const logo = document.getElementById('brand-logo');
   if(logo) {
     logo.addEventListener('error', function() { this.style.display = 'none'; });
@@ -181,7 +193,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   document.getElementById('btn-sort').addEventListener('click', function() {
-    chrome.storage.local.get({ groupThreshold: 2 }, (settings) => {
+    chrome.storage.local.get({ autoGroupEnabled: true, groupThreshold: 2 }, (settings) => {
+      if (settings.autoGroupEnabled) {
+        showToast('Auto-Pilot is already grouping your tabs');
+        return;
+      }
       chrome.tabs.query({ currentWindow: true }, function(tabs) {
         const groups = {};
         tabs.forEach(tab => {

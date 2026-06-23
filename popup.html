@@ -117,19 +117,19 @@
   </div>
   <button id="btn-sort" class="hero-btn"><span style="font-size: 16px;">✦</span> Organize tabs into groups <span style="opacity:.5;font-size:.72em;font-weight:500;margin-left:4px;">Alt+G</span></button>
   <div class="tool-bar">
-    <button id="btn-sleep" class="tool-btn"><span class="tool-icon">☾</span><span>Sleep tabs</span></button>
-    <button id="btn-dupes" class="tool-btn" style="color: var(--danger);"><span class="tool-icon">⦻</span><span>Dedupe tabs</span></button>
-    <button id="btn-merge" class="tool-btn"><span class="tool-icon">⊞</span><span>Merge windows</span></button>
+    <button id="btn-sleep" class="tool-btn" title="Suspend all background tabs to free up memory. Click the tab to wake it."><span class="tool-icon">☾</span><span>Sleep tabs</span></button>
+    <button id="btn-dupes" class="tool-btn" style="color: var(--danger);" title="Close duplicate tabs — keeps the first copy of any URL open."><span class="tool-icon">⦻</span><span>Dedupe tabs</span></button>
+    <button id="btn-merge" class="tool-btn" title="Pull all tabs from other Chrome windows into this one."><span class="tool-icon">⊞</span><span>Merge windows</span></button>
   </div>
   <div class="section-header">
     <span class="section-title">Archive tabs</span>
     <span id="btn-dashboard" class="dash-link">View Vault ↗</span>
   </div>
   <div class="archive-grid">
-    <button id="arc-current" class="arc-btn"><span class="arc-icon">⊙</span> Current tab</button>
-    <button id="arc-all" class="arc-btn"><span class="arc-icon">⟷</span> All tabs</button>
-    <button id="arc-left" class="arc-btn"><span class="arc-icon">⟵</span> Left tabs</button>
-    <button id="arc-right" class="arc-btn"><span class="arc-icon">⟶</span> Right tabs</button>
+    <button id="arc-current" class="arc-btn" title="Save this tab to your Vault and close it."><span class="arc-icon">⊙</span> Current tab</button>
+    <button id="arc-all" class="arc-btn" title="Save all open tabs as a named session in your Vault and close them."><span class="arc-icon">⟷</span> All tabs</button>
+    <button id="arc-left" class="arc-btn" title="Save all tabs to the left of this one to your Vault and close them."><span class="arc-icon">⟵</span> Left tabs</button>
+    <button id="arc-right" class="arc-btn" title="Save all tabs to the right of this one to your Vault and close them."><span class="arc-icon">⟶</span> Right tabs</button>
   </div>
   <div id="groups-section">
     <div class="section-header" style="margin-top:12px;margin-bottom:8px;">
