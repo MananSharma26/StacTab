@@ -4,9 +4,11 @@ function escapeHTML(str) {
 
 function getSmartName(urlObj) {
   const host = urlObj.hostname.toLowerCase(); const path = urlObj.pathname.toLowerCase();
-  if (host === 'vertexaisearch.cloud.google.com' || host === 'gemini.google.com') return 'Gemini';
-  if (host === 'meet.google.com') return 'Meet';
+  if (host === 'gemini.google.com' || host === 'vertexaisearch.cloud.google.com') return 'Gemini';
   if (host === 'mail.google.com') return 'Gmail';
+  if (host === 'meet.google.com') return 'Meet';
+  if (host === 'calendar.google.com') return 'Calendar';
+  if (host === 'drive.google.com') return 'Drive';
   if (host === 'docs.google.com') {
     if (path.startsWith('/spreadsheets')) return 'Sheets';
     if (path.startsWith('/document')) return 'Docs';
@@ -14,8 +16,15 @@ function getSmartName(urlObj) {
     if (path.startsWith('/forms')) return 'Forms';
     return 'Docs';
   }
-  if (host === 'drive.google.com') return 'Drive';
-  if (host === 'calendar.google.com') return 'Calendar';
+  if (host === 'maps.google.com') return 'Maps';
+  if (host === 'photos.google.com') return 'Photos';
+  if (host === 'translate.google.com') return 'Translate';
+  if (host === 'chromewebstore.google.com' || host === 'chrome.google.com') return 'Web Store';
+  if (host === 'support.google.com') return 'Google Support';
+  if (host === 'news.google.com') return 'Google News';
+  if (host === 'one.google.com') return 'Google One';
+  if (host === 'accounts.google.com') return null;
+  if (host.endsWith('.google.com') || host === 'google.com') return 'Google';
   if (host.includes('github')) return 'GitHub';
   if (host.includes('looker')) return 'Looker';
   if (host.includes('jira') || host.includes('atlassian')) return 'Jira';

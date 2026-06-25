@@ -2,7 +2,13 @@ const COLORS = ["grey", "blue", "red", "yellow", "green", "pink", "purple", "cya
 
 function getSmartName(urlObj) {
   const host = urlObj.hostname.toLowerCase(); const path = urlObj.pathname.toLowerCase();
-  if (host === 'vertexaisearch.cloud.google.com' || host === 'gemini.google.com') return 'Gemini';
+
+  // --- Google properties (explicit, avoids fallback returning "Google" for everything) ---
+  if (host === 'gemini.google.com' || host === 'vertexaisearch.cloud.google.com') return 'Gemini';
+  if (host === 'mail.google.com') return 'Gmail';
+  if (host === 'meet.google.com') return 'Meet';
+  if (host === 'calendar.google.com') return 'Calendar';
+  if (host === 'drive.google.com') return 'Drive';
   if (host === 'docs.google.com') {
     if (path.startsWith('/spreadsheets')) return 'Sheets';
     if (path.startsWith('/document')) return 'Docs';
@@ -10,16 +16,25 @@ function getSmartName(urlObj) {
     if (path.startsWith('/forms')) return 'Forms';
     return 'Docs';
   }
-  if (host === 'drive.google.com') return 'Drive';
-  if (host === 'calendar.google.com') return 'Calendar';
-  if (host === 'meet.google.com') return 'Meet';
-  if (host === 'mail.google.com') return 'Gmail';
+  if (host === 'maps.google.com' || host === 'google.com/maps') return 'Maps';
+  if (host === 'photos.google.com') return 'Photos';
+  if (host === 'translate.google.com') return 'Translate';
+  if (host === 'chromewebstore.google.com' || host === 'chrome.google.com') return 'Web Store';
+  if (host === 'support.google.com') return 'Google Support';
+  if (host === 'news.google.com') return 'Google News';
+  if (host === 'one.google.com') return 'Google One';
+  if (host === 'accounts.google.com') return null; // transient auth page — skip grouping
+  // Any remaining *.google.com → Google (search, www, etc.)
+  if (host.endsWith('.google.com') || host === 'google.com') return 'Google';
+
+  // --- Other known services ---
+  if (host.includes('github')) return 'GitHub';
   if (host.includes('looker')) return 'Looker';
   if (host.includes('jira') || host.includes('atlassian')) return 'Jira';
   if (host.includes('workday') || host.includes('myworkday')) return 'WD';
   if (host.includes('dynamics.com') || host.includes('d365')) return 'D365';
-  if (host.includes('github')) return 'GitHub';
 
+  // --- Generic fallback ---
   let parts = host.replace(/^(www\.|app\.|eu\.|us\.|uk\.|api\.)/g, '').split('.');
   let name = parts.length > 1 ? parts[parts.length - 2] : parts[0];
   return name.charAt(0).toUpperCase() + name.slice(1);
@@ -38,19 +53,44 @@ function updateBadge() {
   });
 }
 
+// --- StacTab-created group tracking ---
+// Stored as a Set of groupIds in chrome.storage.local under key 'stacGroupIds'
+function getStacGroupIds(cb) {
+  chrome.storage.local.get({ stacGroupIds: [] }, res => cb(new Set(res.stacGroupIds)));
+}
+function saveStacGroupIds(set) {
+  chrome.storage.local.set({ stacGroupIds: [...set] });
+}
+function trackGroup(groupId) {
+  getStacGroupIds(set => { set.add(groupId); saveStacGroupIds(set); });
+}
+function untrackGroup(groupId) {
+  getStacGroupIds(set => { set.delete(groupId); saveStacGroupIds(set); });
+}
+
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.url) {
     chrome.storage.local.get({ autoGroupEnabled: true, groupThreshold: 2 }, (res) => {
       const runGrouping = () => { if (res.autoGroupEnabled) autoGroupTabs(res.groupThreshold); };
-      // If tab is in a group, check if its new domain still matches that group
       if (tab.groupId !== chrome.tabGroups.TAB_GROUP_ID_NONE) {
         chrome.tabGroups.get(tab.groupId, (group) => {
           if (chrome.runtime.lastError || !group) { runGrouping(); return; }
           try {
             const url = new URL(tab.url);
-            const smartName = url.protocol.startsWith('http') ? getSmartName(url) : null;
+            if (!url.protocol.startsWith('http')) { runGrouping(); return; }
+            const smartName = getSmartName(url);
+            // null = transient page (e.g. accounts.google.com) — don't touch the group
+            if (smartName === null) { return; }
+            // Only ungroup if StacTab created this group and domain changed
             if (smartName && group.title !== smartName) {
-              chrome.tabs.ungroup([tabId], runGrouping);
+              getStacGroupIds(set => {
+                if (set.has(tab.groupId)) {
+                  chrome.tabs.ungroup([tabId], runGrouping);
+                } else {
+                  // User/Chrome-saved group — leave it alone, just re-run grouping
+                  runGrouping();
+                }
+              });
             } else { runGrouping(); }
           } catch(e) { runGrouping(); }
         });
@@ -60,8 +100,33 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   }
 });
 
+// Auto-ungroup StacTab groups that drop to 1 tab
+chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+  updateBadge();
+  getStacGroupIds(set => {
+    if (set.size === 0) return;
+    chrome.tabs.query({ currentWindow: true }, (tabs) => {
+      set.forEach(groupId => {
+        const remaining = tabs.filter(t => t.groupId === groupId);
+        if (remaining.length === 1) {
+          chrome.tabs.ungroup([remaining[0].id], () => {
+            if (chrome.runtime.lastError) return;
+            untrackGroup(groupId);
+          });
+        } else if (remaining.length === 0) {
+          untrackGroup(groupId);
+        }
+      });
+    });
+  });
+});
+
 chrome.tabs.onCreated.addListener(updateBadge);
-chrome.tabs.onRemoved.addListener(updateBadge);
+
+// Fix Mac startup badge showing wrong count — Chrome restores tabs async on launch
+chrome.runtime.onStartup.addListener(() => {
+  setTimeout(updateBadge, 1500);
+});
 
 function autoGroupTabs(threshold = 2) {
   chrome.tabs.query({ currentWindow: true }, (tabs) => {
@@ -71,6 +136,7 @@ function autoGroupTabs(threshold = 2) {
         const url = new URL(tab.url);
         if (!url.protocol.startsWith('http')) return;
         const smartName = getSmartName(url);
+        if (!smartName) return; // skip null (transient) domains
         if (!groups[smartName]) groups[smartName] = [];
         groups[smartName].push(tab);
       } catch (e) {}
@@ -81,9 +147,11 @@ function autoGroupTabs(threshold = 2) {
         const firstGroupId = domainTabs[0].groupId;
         const alreadyGrouped = domainTabs.every(t => t.groupId !== chrome.tabGroups.TAB_GROUP_ID_NONE && t.groupId === firstGroupId);
         if (!alreadyGrouped) {
-          const tabIds = domainTabs.map(t => t.id); 
-          chrome.tabs.group({ tabIds: tabIds }, (groupId) => {
+          const tabIds = domainTabs.map(t => t.id);
+          chrome.tabs.group({ tabIds }, (groupId) => {
+            if (chrome.runtime.lastError) return;
             chrome.tabGroups.update(groupId, { title: name, color: getColorForName(name) });
+            trackGroup(groupId);
           });
         }
       }
@@ -96,7 +164,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
       const groupedTabIds = tabs.filter(t => t.groupId !== chrome.tabGroups.TAB_GROUP_ID_NONE).map(t => t.id);
       if (groupedTabIds.length > 0) {
-        chrome.tabs.ungroup(groupedTabIds);
+        chrome.tabs.ungroup(groupedTabIds, () => {
+          chrome.storage.local.set({ stacGroupIds: [] });
+        });
       }
     });
   }
@@ -168,6 +238,7 @@ chrome.commands.onCommand.addListener((command) => {
             const url = new URL(tab.url);
             if (!url.protocol.startsWith('http')) return;
             const name = getSmartName(url);
+            if (!name) return;
             if (!groups[name]) groups[name] = [];
             groups[name].push(tab.id);
           } catch(e) {}
@@ -175,7 +246,9 @@ chrome.commands.onCommand.addListener((command) => {
         for (const [name, tabIds] of Object.entries(groups)) {
           if (tabIds.length >= settings.groupThreshold) {
             chrome.tabs.group({ tabIds }, (groupId) => {
+              if (chrome.runtime.lastError) return;
               chrome.tabGroups.update(groupId, { title: name });
+              trackGroup(groupId);
             });
           }
         }
