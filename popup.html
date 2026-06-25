@@ -71,8 +71,8 @@
     .arc-btn { background: var(--surface); border: 1px solid var(--border); padding: 6px 10px; border-radius: var(--radius-large); font-size: 11px; font-weight: 500; color: var(--text-main); cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 7px; }
     .arc-btn:hover { border-color: var(--accent); background: var(--surface-hover); }
     .arc-icon { color: var(--text-sub); font-size: 15px; flex-shrink: 0; }
-    .info-btn { background: none; border: none; cursor: pointer; color: var(--text-sub); font-size: 13px; padding: 2px 4px; border-radius: 4px; transition: color 0.15s, background 0.15s; line-height: 1; }
-    .info-btn:hover { color: var(--accent); background: rgba(139,92,246,0.08); }
+    .info-btn { background: none; border: none; cursor: pointer; color: var(--text-main); font-size: 13px; padding: 2px 4px; border-radius: 4px; transition: color 0.15s, background 0.15s; line-height: 1; opacity: 0.55; }
+    .info-btn:hover { color: var(--accent); background: rgba(139,92,246,0.08); opacity: 1; }
     #info-modal { display: none; position: absolute; inset: 0; background: var(--surface); border-radius: var(--radius-large); padding: 16px; z-index: 200; flex-direction: column; gap: 0; border: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); overflow-y: auto; }
     .info-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .info-modal-title { font-size: 13px; font-weight: 700; color: var(--text-main); }
@@ -112,6 +112,7 @@
         <img src="icon_v2.png" alt="Logo" id="brand-logo">
         <div class="brand-text"><span class="brand-name">StacTab</span><span class="brand-status">Auto-Pilot</span></div>
       </div>
+      <button class="info-btn" id="btn-info" title="What does each button do?">ⓘ</button>
       <label class="switch" title="Toggle Auto-Grouping"><input type="checkbox" id="toggle-auto" checked><span class="slider"></span></label>
     </div>
     <div class="threshold-row">
@@ -138,10 +139,7 @@
   </div>
   <div class="section-header">
     <span class="section-title">Archive tabs</span>
-    <div style="display:flex;align-items:center;gap:6px;">
-      <button class="info-btn" id="btn-info" title="What does each button do?">ⓘ</button>
-      <span id="btn-dashboard" class="dash-link">View Vault ↗</span>
-    </div>
+    <span id="btn-dashboard" class="dash-link">View Vault ↗</span>
   </div>
   <div class="archive-grid">
     <button id="arc-current" class="arc-btn" title="Save this tab to your Vault and close it."><span class="arc-icon">⊙</span> Current tab</button>
@@ -159,6 +157,11 @@
     <div class="info-modal-header">
       <span class="info-modal-title">What each button does</span>
       <button class="info-close" id="info-close">✕</button>
+    </div>
+    <div class="info-group">
+      <div class="info-group-title">Auto-Pilot</div>
+      <div class="info-row"><span class="info-icon">●</span><div class="info-text"><div class="info-label">Auto-Pilot toggle</div><div class="info-desc">On by default. Automatically groups your tabs by domain as you browse — no clicks needed. When 2+ tabs from the same site are open, they're grouped and colour-coded instantly.</div></div></div>
+      <div class="info-row"><span class="info-icon">#</span><div class="info-text"><div class="info-label">Group at 2 / 3 / 4 / 5</div><div class="info-desc">The threshold before Auto-Pilot creates a group. Default is 2 — meaning 2 tabs from the same domain triggers grouping. Raise it if you want more tabs before groups appear.</div></div></div>
     </div>
     <div class="info-group">
       <div class="info-group-title">Organize</div>
