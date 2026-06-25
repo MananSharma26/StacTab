@@ -335,4 +335,12 @@ document.addEventListener('DOMContentLoaded', function() {
       btnDashboard.addEventListener('click', openDashboard);
   }
 
+  const infoModal = document.getElementById('info-modal');
+  document.getElementById('btn-info').addEventListener('click', () => {
+    infoModal.style.display = 'flex';
+  });
+  document.getElementById('info-close').addEventListener('click', () => {
+    infoModal.style.display = 'none';
+  });
+
 });

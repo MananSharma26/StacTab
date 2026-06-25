@@ -68,9 +68,24 @@
     .dash-link { font-size: 12px; font-weight: 500; color: var(--accent); text-decoration: none; cursor: pointer; transition: 0.2s; background: rgba(139, 92, 246, 0.05); padding: 4px 8px; border-radius: 6px;}
     .dash-link:hover { background: rgba(139, 92, 246, 0.1); }
     .archive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
-    .arc-btn { background: var(--surface); border: 1px solid var(--border); padding: 8px 8px; border-radius: var(--radius-large); font-size: 11px; font-weight: 500; color: var(--text-main); cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+    .arc-btn { background: var(--surface); border: 1px solid var(--border); padding: 6px 10px; border-radius: var(--radius-large); font-size: 11px; font-weight: 500; color: var(--text-main); cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 7px; }
     .arc-btn:hover { border-color: var(--accent); background: var(--surface-hover); }
-    .arc-icon { color: var(--text-sub); font-size: 17px; }
+    .arc-icon { color: var(--text-sub); font-size: 15px; flex-shrink: 0; }
+    .info-btn { background: none; border: none; cursor: pointer; color: var(--text-sub); font-size: 13px; padding: 2px 4px; border-radius: 4px; transition: color 0.15s, background 0.15s; line-height: 1; }
+    .info-btn:hover { color: var(--accent); background: rgba(139,92,246,0.08); }
+    #info-modal { display: none; position: absolute; inset: 0; background: var(--surface); border-radius: var(--radius-large); padding: 16px; z-index: 200; flex-direction: column; gap: 0; border: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); overflow-y: auto; }
+    .info-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .info-modal-title { font-size: 13px; font-weight: 700; color: var(--text-main); }
+    .info-close { background: none; border: none; cursor: pointer; font-size: 16px; color: var(--text-sub); padding: 2px 6px; border-radius: 4px; transition: background 0.15s; }
+    .info-close:hover { background: var(--bg); }
+    .info-group { margin-bottom: 12px; }
+    .info-group-title { font-size: 10px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
+    .info-row { display: flex; align-items: flex-start; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--border); }
+    .info-row:last-child { border-bottom: none; }
+    .info-icon { font-size: 13px; width: 20px; text-align: center; flex-shrink: 0; color: var(--text-sub); margin-top: 1px; }
+    .info-text { flex: 1; }
+    .info-label { font-size: 11px; font-weight: 600; color: var(--text-main); }
+    .info-desc { font-size: 10.5px; color: var(--text-sub); line-height: 1.4; margin-top: 1px; }
     #session-modal { display: none; position: absolute; inset: 0; background: var(--surface); border-radius: var(--radius-large); padding: 20px; z-index: 200; flex-direction: column; gap: 12px; border: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
     .session-modal-title { font-size: 13px; font-weight: 600; color: var(--text-main); }
     .session-modal-hint { font-size: 11px; color: var(--text-sub); margin-top: -6px; }
@@ -123,7 +138,10 @@
   </div>
   <div class="section-header">
     <span class="section-title">Archive tabs</span>
-    <span id="btn-dashboard" class="dash-link">View Vault ↗</span>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <button class="info-btn" id="btn-info" title="What does each button do?">ⓘ</button>
+      <span id="btn-dashboard" class="dash-link">View Vault ↗</span>
+    </div>
   </div>
   <div class="archive-grid">
     <button id="arc-current" class="arc-btn" title="Save this tab to your Vault and close it."><span class="arc-icon">⊙</span> Current tab</button>
@@ -137,6 +155,34 @@
     </div>
     <div id="groups-list" class="groups-list"></div>
   </div>
+  <div id="info-modal">
+    <div class="info-modal-header">
+      <span class="info-modal-title">What each button does</span>
+      <button class="info-close" id="info-close">✕</button>
+    </div>
+    <div class="info-group">
+      <div class="info-group-title">Organize</div>
+      <div class="info-row"><span class="info-icon">✦</span><div class="info-text"><div class="info-label">Organize tabs into groups</div><div class="info-desc">Groups all ungrouped tabs by domain. Use when Auto-Pilot is off, or to force a re-group.</div></div></div>
+    </div>
+    <div class="info-group">
+      <div class="info-group-title">Tools</div>
+      <div class="info-row"><span class="info-icon">☾</span><div class="info-text"><div class="info-label">Sleep tabs</div><div class="info-desc">Suspends all background tabs to free up RAM. The tabs stay visible — click one to wake it.</div></div></div>
+      <div class="info-row"><span class="info-icon">⦻</span><div class="info-text"><div class="info-label">Dedupe tabs</div><div class="info-desc">Closes duplicate tabs. Keeps the first copy of any URL that's open more than once.</div></div></div>
+      <div class="info-row"><span class="info-icon">⊞</span><div class="info-text"><div class="info-label">Merge windows</div><div class="info-desc">Pulls all tabs from other Chrome windows into this one.</div></div></div>
+    </div>
+    <div class="info-group">
+      <div class="info-group-title">Archive</div>
+      <div class="info-row"><span class="info-icon">⊙</span><div class="info-text"><div class="info-label">Current tab</div><div class="info-desc">Saves the active tab to your Vault and closes it.</div></div></div>
+      <div class="info-row"><span class="info-icon">⟷</span><div class="info-text"><div class="info-label">All tabs</div><div class="info-desc">Saves all open tabs as a named session in your Vault, then closes them.</div></div></div>
+      <div class="info-row"><span class="info-icon">⟵</span><div class="info-text"><div class="info-label">Left tabs</div><div class="info-desc">Saves all tabs to the left of the current one to your Vault and closes them.</div></div></div>
+      <div class="info-row"><span class="info-icon">⟶</span><div class="info-text"><div class="info-label">Right tabs</div><div class="info-desc">Saves all tabs to the right of the current one to your Vault and closes them.</div></div></div>
+    </div>
+    <div class="info-group">
+      <div class="info-group-title">Tab groups</div>
+      <div class="info-row"><span class="info-icon">●</span><div class="info-text"><div class="info-label">Group buttons</div><div class="info-desc">Each button is an active tab group. Click to archive the whole group to your Vault.</div></div></div>
+    </div>
+  </div>
+
   <div id="session-modal">
     <div class="session-modal-title">Name this session</div>
     <div class="session-modal-hint">Optional — leave blank to use today's date</div>
