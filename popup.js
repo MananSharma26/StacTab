@@ -352,4 +352,22 @@ document.addEventListener('DOMContentLoaded', function() {
     infoModal.style.display = 'none';
   });
 
+  // Review nudge — show after 3 days, only once
+  const THREE_DAYS = 3 * 24 * 60 * 60 * 1000;
+  chrome.storage.local.get({ installDate: null, reviewDone: false }, (res) => {
+    if (!res.reviewDone && res.installDate && (Date.now() - res.installDate >= THREE_DAYS)) {
+      const reviewModal = document.getElementById('review-modal');
+      reviewModal.style.display = 'flex';
+      document.getElementById('review-yes').addEventListener('click', () => {
+        chrome.storage.local.set({ reviewDone: true });
+        chrome.tabs.create({ url: 'https://chromewebstore.google.com/detail/stactab/hdfcdcoogjkdogmnhhopkekanpldoefh/reviews' });
+        reviewModal.style.display = 'none';
+      });
+      document.getElementById('review-no').addEventListener('click', () => {
+        chrome.storage.local.set({ reviewDone: true });
+        reviewModal.style.display = 'none';
+      });
+    }
+  });
+
 });

@@ -41,6 +41,8 @@ function getSmartName(urlObj) {
 }
 
 function getColorForName(name) {
+  const fixed = { 'Gemini': 'cyan' };
+  if (fixed[name]) return fixed[name];
   let hash = 0;
   for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
   return COLORS[Math.abs(hash) % COLORS.length];
@@ -100,12 +102,10 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   }
 });
 
-// Auto-ungroup StacTab groups that drop to 1 tab
-chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
-  updateBadge();
+function cleanupSoloGroups() {
   getStacGroupIds(set => {
     if (set.size === 0) return;
-    chrome.tabs.query({ currentWindow: true }, (tabs) => {
+    chrome.tabs.query({}, (tabs) => {
       set.forEach(groupId => {
         const remaining = tabs.filter(t => t.groupId === groupId);
         if (remaining.length === 1) {
@@ -119,6 +119,17 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
       });
     });
   });
+}
+
+// Auto-ungroup StacTab groups that drop to 1 tab
+chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+  updateBadge();
+  cleanupSoloGroups();
+});
+
+// Also catch tabs being dragged out of a group
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if ('groupId' in changeInfo) cleanupSoloGroups();
 });
 
 chrome.tabs.onCreated.addListener(updateBadge);
@@ -257,7 +268,10 @@ chrome.commands.onCommand.addListener((command) => {
   }
 });
 
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === 'install') {
+    chrome.storage.local.set({ installDate: Date.now() });
+  }
   chrome.contextMenus.create({
     id: "stac-parent",
     title: "Stac Tab",
